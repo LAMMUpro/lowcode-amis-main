@@ -1,27 +1,22 @@
 {
-  "name": "amis-editor-demo",
+  "name": "@lammu/editor",
   "version": "1.0.0",
   "description": "amis 可视化编辑器",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "dev": "amis dev",
     "build": "amis build",
     "format": "prettier --write \"src/**/**/*.{js,jsx,ts,tsx,vue,scss,json}\""
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aisuda/amis-editor-demo.git"
+    "type": "github",
+    "url": "https://github.com/aisuda/amis-editor-demo.git"
   },
   "keywords": [
     "amis",
     "editor"
   ],
-  "author": "fex",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aisuda/amis-editor-demo/issues"
-  },
-  "homepage": "https://github.com/aisuda/amis-editor-demo#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "amis": "3.4.3",
