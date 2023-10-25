@@ -4,7 +4,7 @@ import {IMainStore} from '@/store';
 import {Button, AsideNav, Layout, confirm} from 'amis';
 import {RouteComponentProps, matchPath, Switch, Route} from 'react-router';
 import {Link} from 'react-router-dom';
-import NotFound from '@/pages/NotFound';
+import NotFound from '@/pages/404';
 import AMISRenderer from '@/component/AMISRenderer';
 import AddPageModal from '@/component/AddPageModal';
 

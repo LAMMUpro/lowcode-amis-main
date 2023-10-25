@@ -11,7 +11,7 @@ import {IMainStore} from '@/store/index';
 // import Editor from './Editor';
 import '@/renderer/MyRenderer';
 const Preview = React.lazy(() => import('@/pages/preview'));
-const Editor = React.lazy(() => import('@/pages/Editor'));
+const Editor = React.lazy(() => import('@/pages/editor'));
 
 export default observer(function ({store}: {store: IMainStore}) {
   return (
