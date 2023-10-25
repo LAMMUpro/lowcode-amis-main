@@ -209,7 +209,7 @@ export function schema2component(
       return <>{body}</>;
     }
   }
-
+  //@ts-ignore
   return withRouter(SchemaRenderer);
 }
 

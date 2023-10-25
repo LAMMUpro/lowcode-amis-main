@@ -6,6 +6,7 @@ export interface MyRendererProps extends RendererProps {
   target?: string;
 }
 
+//@ts-ignore
 @Renderer({
   test: /\bmy-renderer$/,
   name: 'my-renderer'
