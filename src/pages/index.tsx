@@ -6,12 +6,12 @@ import {ToastComponent, AlertComponent, Spinner} from 'amis';
  */
 import {Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-dom';
 import {observer} from 'mobx-react';
-import {IMainStore} from '../store/index';
+import {IMainStore} from '@/store/index';
 // import Preview from './Preview';
 // import Editor from './Editor';
-import '../renderer/MyRenderer';
-const Preview = React.lazy(() => import('./Preview'));
-const Editor = React.lazy(() => import('./Editor'));
+import '@/renderer/MyRenderer';
+const Preview = React.lazy(() => import('@/pages/preview'));
+const Editor = React.lazy(() => import('@/pages/Editor'));
 
 export default observer(function ({store}: {store: IMainStore}) {
   return (

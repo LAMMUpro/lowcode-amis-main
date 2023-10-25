@@ -2,8 +2,8 @@ import React from 'react';
 import {Provider} from 'mobx-react';
 import {toast, alert, confirm} from 'amis';
 import axios from 'axios';
-import {MainStore} from './store/index';
-import RootRoute from './route/index';
+import {MainStore} from '@/store/index';
+import RootRoute from '@/pages/index';
 import copy from 'copy-to-clipboard';
 
 export default function (): JSX.Element {

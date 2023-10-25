@@ -1,12 +1,12 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
-import {IMainStore} from '../store';
+import {IMainStore} from '@/store';
 import {Button, AsideNav, Layout, confirm} from 'amis';
 import {RouteComponentProps, matchPath, Switch, Route} from 'react-router';
 import {Link} from 'react-router-dom';
-import NotFound from './NotFound';
-import AMISRenderer from '../component/AMISRenderer';
-import AddPageModal from '../component/AddPageModal';
+import NotFound from '@/pages/NotFound';
+import AMISRenderer from '@/component/AMISRenderer';
+import AddPageModal from '@/component/AddPageModal';
 
 function isActive(link: any, location: any) {
   const ret = matchPath(location?.pathname, {
@@ -27,24 +27,24 @@ export default inject('store')(
     function renderHeader() {
       return (
         <>
-          <div className={`cxd-Layout-brandBar`}>
+          <div className="preview header">
             <div className="cxd-Layout-brand text-ellipsis">
-              <i className="fa fa-paw"></i>
-              <span className="hidden-folded m-l-sm">AMIS 示例</span>
+              <i className="fa fa-tv"></i>
+              <span className="hidden-folded m-l-sm">应用名称</span>
             </div>
-          </div>
-          <div className={`cxd-Layout-headerBar`}>
-            <div className="hidden-xs p-t-sm ml-auto px-2">
-              <Button size="sm" className="m-r-xs" level="success" disabled>
-                全部导出
-              </Button>
-              <Button
-                size="sm"
-                level="info"
-                onClick={() => store.setAddPageIsOpen(true)}
-              >
-                新增页面
-              </Button>
+            <div className="">
+              <div className="hidden-xs p-t-sm ml-auto px-2">
+                <Button size="sm" className="m-r-xs" level="success" disabled>
+                  全部导出
+                </Button>
+                <Button
+                  size="sm"
+                  level="info"
+                  onClick={() => store.setAddPageIsOpen(true)}
+                >
+                  新增页面
+                </Button>
+              </div>
             </div>
           </div>
         </>
@@ -64,7 +64,7 @@ export default inject('store')(
           key={store.asideFolded ? 'folded-aside' : 'aside'}
           navigations={[
             {
-              label: '导航',
+              label: '导航菜单',
               children: navigations
             }
           ]}
