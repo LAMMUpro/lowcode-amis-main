@@ -135,6 +135,12 @@ export default class MyRendererEditor extends BasicEditor {
 
 然后直接看效果吧 https://github.com/fex-team/amis-editor 这里面插入的时候选择输入 my-renderer 然后就可以插入自定义的组件了。
 
+## 图标
+> fontawesome https://fontawesome.com/v5/search?o=r&m=free
+```tsx
+<i className="fa fa-${图标名称}"></i>
+```
+
 ## 扩充自定义编辑器（新版）
 
 amis-editor 重构了一版，之前定义注册自定义组件的方式也能用，但是已经标记了 `deprecated`，新的添加自定义编辑器的方式有两种。
