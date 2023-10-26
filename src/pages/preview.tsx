@@ -186,8 +186,11 @@ export default inject('store')(
         ...value,
         schema: {
           type: 'page',
-          title: value.label,
-          body: '这是你刚刚新增的页面。'
+          // title: value.label,
+          body: '这是你刚刚新建的页面。',
+          regions: [
+            "body"
+          ]
         }
       });
       store.setAddPageIsOpen(false);
