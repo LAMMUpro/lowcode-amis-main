@@ -6,6 +6,11 @@ amis 可视化编辑器, 在线体验：https://aisuda.github.io/amis-editor-dem
 
 要使用编辑器必须熟悉 React，如果不了解建议使用[速搭](https://aisuda.baidu.com/)。
 
+## git区分大小写
+```github
+git config core.ignorecase false # 在项目根目录中执行
+```
+
 ## 本地运行这个项目
 
 1. `npm i` 安装依赖
