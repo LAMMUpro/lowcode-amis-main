@@ -5,6 +5,7 @@ import {getEnv} from 'mobx-state-tree';
 import {IMainStore} from '../store';
 import qs from 'qs';
 import {render as amisRender, utils, filter} from 'amis';
+import axios from 'axios';
 
 export function schema2component(
   schema: any,
@@ -203,7 +204,51 @@ export function schema2component(
           propsTransform: transform,
           theme: store.theme
         },
-        this.getEnv()
+        { 
+          ...this.getEnv(),
+          /** 自带的有问题, 自己实现一个 */
+          fetcher: ({
+            url, // 接口地址
+            method, // 请求方法 get、post、put、delete
+            data, // 请求数据
+            responseType,
+            config, // 其他配置
+            headers // 请求头
+          }: any) => {
+            config = config || {};
+            config.withCredentials = true;
+            responseType && (config.responseType = responseType);
+        
+            if (config.cancelExecutor) {
+              config.cancelToken = new (axios as any).CancelToken(
+                config.cancelExecutor
+              );
+            }
+        
+            config.headers = headers || {};
+        
+            if (method !== 'post' && method !== 'put' && method !== 'patch') {
+              if (data) {
+                config.params = data;
+              }
+              return (axios as any)[method](url, config);
+            } else if (data && data instanceof FormData) {
+              config.headers = config.headers || {};
+              config.headers['Content-Type'] = 'multipart/form-data';
+            } else if (
+              data &&
+              typeof data !== 'string' &&
+              !(data instanceof Blob) &&
+              !(data instanceof ArrayBuffer)
+            ) {
+              data = JSON.parse(JSON.stringify(data));
+              config.headers = config.headers || {};
+              config.headers['Content-Type'] = 'application/json';
+            }
+        
+            return (axios as any)[method](url, data, config);
+          }
+        }
       );
 
       return <>{body}</>;
