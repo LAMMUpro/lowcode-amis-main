@@ -1,4 +1,4 @@
-import {schema2component} from './AMISRenderer';
+import {schema2component} from './SchemaRender';
 
 export default schema2component(
   {

@@ -1,7 +1,9 @@
 import {types, getEnv, applySnapshot, getSnapshot} from 'mobx-state-tree';
 import {PageStore} from './Page';
 import {when, reaction} from 'mobx';
+
 let pagIndex = 1;
+
 export const MainStore = types
   .model('MainStore', {
     pages: types.optional(types.array(PageStore), [

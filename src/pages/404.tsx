@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {NotFound} from 'amis';
 
 export default () => (
   <div style={{backgroundColor: 'white', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

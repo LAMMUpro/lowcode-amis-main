@@ -3,8 +3,23 @@ import {Provider} from 'mobx-react';
 import {toast, alert, confirm} from 'amis';
 import axios from 'axios';
 import {MainStore} from '@/store/index';
-import RootRoute from '@/pages/index';
 import copy from 'copy-to-clipboard';
+import {ToastComponent, AlertComponent, Spinner} from 'amis';
+/**
+ * BrowserRouter: history 路由模式
+ * HashRouter: hash 路由模式
+ */
+import {Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-dom';
+import {observer} from 'mobx-react';
+import {IMainStore} from '@/store/index';
+import '@/renderer/MyRenderer';
+const Preview = React.lazy(() => import('@/pages/preview'));
+const Editor = React.lazy(() => import('@/pages/editor'));
+import SchemaRender from "@/component/SchemaRender";
+import loginSchema from "@/schema/login.json";
+import registerSchema from "@/schema/register.json";
+import resetPswSchema from "@/schema/resetPsw.json";
+import Page404 from '@/pages/404';
 
 export default function (): JSX.Element {
   const store = ((window as any).store = MainStore.create(
@@ -60,3 +75,29 @@ export default function (): JSX.Element {
     </Provider>
   );
 }
+
+const RootRoute = observer(function ({store}: {store: IMainStore}) {
+  return (
+    <Router>
+      <div className="routes-wrapper">
+        <ToastComponent key="toast" position={'top-right'} />
+        <AlertComponent key="alert" />
+        <React.Suspense
+          fallback={<Spinner overlay className="m-t-lg" size="lg" />}
+        >
+          <Switch>
+            <Route path="/login" component={() => <SchemaRender schema={loginSchema}/>} />
+            <Route path="/register" component={() => <SchemaRender schema={registerSchema}/>} />
+            <Route path="/resetPsw" component={() => <SchemaRender schema={resetPswSchema}/>} />
+
+            <Route path="/preview/:id" component={Preview} />
+            <Route path="/edit/:id" component={Editor} />
+            
+            <Redirect to={`/preview/404`} from={`/`} exact />
+            <Route component={Page404} />
+          </Switch>
+        </React.Suspense>
+      </div>
+    </Router>
+  );
+})

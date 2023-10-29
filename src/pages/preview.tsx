@@ -5,12 +5,13 @@ import {Button, AsideNav, Layout, confirm} from 'amis';
 import {RouteComponentProps, matchPath, Switch, Route} from 'react-router';
 import {Link} from 'react-router-dom';
 import NotFound from '@/pages/404';
-import AMISRenderer from '@/component/AMISRenderer';
-import AddPageModal from '@/component/AddPageModal';
+import SchemaRender from '@/component/SchemaRender';
+import AddPageDialog from '@/component/AddPageDialog';
+import defaultSchema from '@/schema/default.json';
 
 function isActive(link: any, location: any) {
   const ret = matchPath(location?.pathname, {
-    path: link ? link.replace(/\?.*$/, '') : '',
+    path: link ? '/preview' + link.replace(/\?.*$/, '') : '',
     exact: true,
     strict: true
   });
@@ -24,6 +25,7 @@ export default inject('store')(
     location,
     history
   }: {store: IMainStore} & RouteComponentProps) {
+    /** 预览页头部 */
     function renderHeader() {
       return (
         <>
@@ -51,6 +53,7 @@ export default inject('store')(
       );
     }
 
+    /** 预览页侧边栏菜单 */
     function renderAside() {
       const navigations = store.pages.map(item => ({
         label: item.label,
@@ -153,7 +156,7 @@ export default inject('store')(
               link.active ? (
                 <a>{children}</a>
               ) : (
-                <Link to={link.path[0] === '/' ? link.path : `${link.path}`}>
+                <Link to={`/preview${link.path}`}>
                   {children}
                 </Link>
               )
@@ -181,17 +184,11 @@ export default inject('store')(
       );
     }
 
+    /** 新增页面, 确定 */
     function handleConfirm(value: {label: string; icon: string; path: string}) {
       store.addPage({
         ...value,
-        schema: {
-          type: 'page',
-          // title: value.label,
-          body: '这是你刚刚新建的页面。',
-          regions: [
-            "body"
-          ]
-        }
+        schema: defaultSchema
       });
       store.setAddPageIsOpen(false);
     }
@@ -203,17 +200,19 @@ export default inject('store')(
         folded={store.asideFolded}
         offScreen={store.offScreen}
       >
+        {/* 预览区 */}
         <Switch>
           {store.pages.map((item: any) => (
             <Route
               key={item.id}
-              path={`/${item.path}`}
-              render={() => <AMISRenderer schema={item.schema} />}
+              path={`/preview/${item.path}`}
+              render={() => <SchemaRender schema={item.schema} />}
             />
           ))}
           <Route component={NotFound} />
         </Switch>
-        <AddPageModal
+        {/* 新增页面弹窗 */}
+        <AddPageDialog
           show={store.addPageIsOpen}
           onClose={() => store.setAddPageIsOpen(false)}
           onConfirm={handleConfirm}

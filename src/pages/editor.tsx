@@ -63,7 +63,7 @@ export default inject('store')(
     }
 
     function exit() {
-      history.push(`/${store.pages[index].path}`);
+      history.push(`/preview/${store.pages[index].path}`);
     }
 
     return (
