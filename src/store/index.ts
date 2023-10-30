@@ -1,4 +1,4 @@
-import {types, getEnv, applySnapshot, getSnapshot} from 'mobx-state-tree';
+import {types, getEnv, applySnapshot, getSnapshot, Instance} from 'mobx-state-tree';
 import {PageStore} from './Page';
 import {when, reaction} from 'mobx';
 
@@ -121,4 +121,4 @@ export const MainStore = types
     };
   });
 
-export type IMainStore = typeof MainStore.Type;
+export type IMainStore = Instance<typeof MainStore>;
