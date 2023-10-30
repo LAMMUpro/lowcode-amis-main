@@ -1,3 +1,6 @@
+/**
+ * amis 渲染schema组件
+ */
 import React from 'react';
 import {RouteComponentProps, withRouter} from 'react-router';
 import {inject, observer} from 'mobx-react';
