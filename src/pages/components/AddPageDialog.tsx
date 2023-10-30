@@ -1,7 +1,7 @@
 /**
  * 添加页面（节点）弹窗
  */
-import {schema2component} from './SchemaRender';
+import {schema2component} from '@/components/SchemaRender';
 
 export default schema2component(
   {

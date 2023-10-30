@@ -5,21 +5,16 @@ import axios from 'axios';
 import {MainStore} from '@/store/index';
 import copy from 'copy-to-clipboard';
 import {ToastComponent, AlertComponent, Spinner} from 'amis';
-/**
- * BrowserRouter: history 路由模式
- * HashRouter: hash 路由模式
- */
 import {Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-dom';
 import {observer} from 'mobx-react';
 import {IMainStore} from '@/store/index';
-import '@/renderer/MyRenderer';
-const Preview = React.lazy(() => import('@/pages/preview'));
-const Editor = React.lazy(() => import('@/pages/editor'));
-import SchemaRender from "@/component/SchemaRender";
+import SchemaRender from "@/components/SchemaRender";
 import loginSchema from "@/schema/login.json";
 import registerSchema from "@/schema/register.json";
 import resetPswSchema from "@/schema/resetPsw.json";
 import Page404 from '@/pages/404';
+const Preview = React.lazy(() => import('@/pages/preview'));
+const Editor = React.lazy(() => import('@/pages/editor'));
 
 export default function (): JSX.Element {
   const store = ((window as any).store = MainStore.create(

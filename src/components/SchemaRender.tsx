@@ -261,4 +261,5 @@ export function schema2component(
   return withRouter(SchemaRenderer);
 }
 
+/** 默认导出<SchemaRenderer> */
 export default schema2component({type: 'page', body: 'It works'});

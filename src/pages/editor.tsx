@@ -6,9 +6,6 @@ import {toast, Select} from 'amis';
 import {currentLocale} from 'i18n-runtime';
 import {Icon} from '@/icons/index';
 import {IMainStore} from '@/store';
-import '@/editor/DisabledEditorPlugin'; // 用于隐藏一些不需要的Editor预置组件
-import '@/renderer/MyRenderer';
-import '@/editor/MyRenderer';
 
 let currentIndex = -1;
 
