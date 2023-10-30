@@ -67,6 +67,10 @@ html {
       &.is-open > a {
         
       }
+      .cxd-AsideNav-subList {
+        background-color: transparent;
+        color: var(--text-color);
+      }
     }
   }
 }
