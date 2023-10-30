@@ -36,9 +36,6 @@ export default inject('store')(
             </div>
             <div className="">
               <div className="hidden-xs p-t-sm ml-auto px-2">
-                <Button size="sm" className="m-r-xs" level="success" disabled>
-                  全部导出
-                </Button>
                 <Button
                   size="sm"
                   level="info"
