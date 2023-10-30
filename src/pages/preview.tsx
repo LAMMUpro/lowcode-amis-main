@@ -1,13 +1,13 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
-import {IMainStore} from '@/store';
 import {Button, AsideNav, Layout, confirm} from 'amis';
 import {RouteComponentProps, matchPath, Switch, Route} from 'react-router';
-import {Link} from 'react-router-dom';
+import {StoreType} from '@/store';
 import NotFound from '@/pages/404';
+import defaultSchema from '@/schema/default.json';
 import SchemaRender from '@/components/SchemaRender';
 import AddPageDialog from '@/pages/components/AddPageDialog';
-import defaultSchema from '@/schema/default.json';
 
 function isActive(link: any, location: any) {
   const ret = matchPath(location?.pathname, {
@@ -24,7 +24,7 @@ export default inject('store')(
     store,
     location,
     history
-  }: {store: IMainStore} & RouteComponentProps) {
+  }: {store: StoreType} & RouteComponentProps) {
     /** 预览页头部 */
     function renderHeader() {
       return (

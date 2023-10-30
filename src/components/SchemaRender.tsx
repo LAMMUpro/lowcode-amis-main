@@ -5,7 +5,7 @@ import React from 'react';
 import {RouteComponentProps, withRouter} from 'react-router';
 import {inject, observer} from 'mobx-react';
 import {getEnv} from 'mobx-state-tree';
-import {IMainStore} from '../store';
+import {StoreType} from '@/store';
 import qs from 'qs';
 import {render as amisRender, utils, filter} from 'amis';
 import axios from 'axios';
@@ -16,7 +16,7 @@ export function schema2component(
   session: string = 'page'
 ) {
   interface SchemaRendererProps extends RouteComponentProps<{}> {
-    store: IMainStore;
+    store: StoreType;
     history: any;
     [propName: string]: any;
   }

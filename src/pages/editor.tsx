@@ -1,11 +1,11 @@
 import React from 'react';
-import {Editor, ShortcutKey} from 'amis-editor';
-import {inject, observer} from 'mobx-react';
-import {RouteComponentProps} from 'react-router-dom';
 import {toast, Select} from 'amis';
 import {currentLocale} from 'i18n-runtime';
+import {inject, observer} from 'mobx-react';
+import {Editor, ShortcutKey} from 'amis-editor';
+import {RouteComponentProps} from 'react-router-dom';
+import {StoreType} from '@/store';
 import {Icon} from '@/icons/index';
-import {IMainStore} from '@/store';
 
 let currentIndex = -1;
 
@@ -35,7 +35,7 @@ export default inject('store')(
     location,
     history,
     match
-  }: {store: IMainStore} & RouteComponentProps<{id: string}>) {
+  }: {store: StoreType} & RouteComponentProps<{id: string}>) {
     const index: number = parseInt(match.params.id, 10);
     const curLanguage = currentLocale(); // 获取当前语料类型
 

@@ -1,13 +1,13 @@
 import React from 'react';
-import {Provider} from 'mobx-react';
-import {toast, alert, confirm} from 'amis';
 import axios from 'axios';
-import {MainStore} from '@/store/index';
 import copy from 'copy-to-clipboard';
+import {Provider} from 'mobx-react';
+import {observer} from 'mobx-react';
+import {toast, alert, confirm} from 'amis';
 import {ToastComponent, AlertComponent, Spinner} from 'amis';
 import {Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-dom';
-import {observer} from 'mobx-react';
-import {IMainStore} from '@/store/index';
+import {MainStore} from '@/store/index';
+import {StoreType} from '@/store/index';
 import SchemaRender from "@/components/SchemaRender";
 import loginSchema from "@/schema/login.json";
 import registerSchema from "@/schema/register.json";
@@ -71,7 +71,7 @@ export default function (): JSX.Element {
   );
 }
 
-const RootRoute = observer(function ({store}: {store: IMainStore}) {
+const RootRoute = observer(function ({store}: {store: StoreType}) {
   return (
     <Router>
       <div className="routes-wrapper">

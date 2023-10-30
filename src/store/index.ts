@@ -121,4 +121,4 @@ export const MainStore = types
     };
   });
 
-export type IMainStore = Instance<typeof MainStore>;
+export type StoreType = Instance<typeof MainStore>;
