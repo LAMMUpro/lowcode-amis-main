@@ -11,6 +11,8 @@ import 'amis/lib/helper.css';
 import 'amis/sdk/iconfont.css';
 import 'amis-editor-core/lib/style.css';
 import '@/scss/style.scss';
+/** 修改组件默认样式 */
+import '@/scss/fix-amis.scss'
 import {setDefaultTheme} from 'amis';
 
 setDefaultTheme('cxd');
