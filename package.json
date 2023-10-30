@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "amis dev",
     "build": "amis build",
-    "format": "prettier --write \"src/**/**/*.{js,jsx,ts,tsx,vue,scss,json}\""
+    "format": "prettier --write \"src/**/**/*.{js,jsx,ts,tsx,vue,scss,json}\"",
+
+    "deploy:test": "export DEPLOY_TIME=$(date +'%Y%m%d%H%M%S') && s deploy -t s.test.yaml",
+    "deploy:dev": "export DEPLOY_TIME=$(date +'%Y%m%d%H%M%S') && s deploy -t s.dev.yaml",
+    "deploy:master": "export DEPLOY_TIME=$(date +'%Y%m%d%H%M%S') && s deploy -t s.master.yaml"
   },
   "repository": {
     "type": "github",

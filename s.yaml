@@ -1,0 +1,107 @@
+edition: 1.0.0 # 命令行YAML规范版本
+access: aliyun # 密钥别名, 不同电脑尽量配置一样的名称，不然部署时需要手动选
+
+## yaml内定义config, 使用${config.name}
+config:
+  region: cn-shenzhen # 地区
+  serviceName: amis-editor # 服务名
+  serviceDescription: amis低代码编辑器 # 服务描述
+  codeUri: ./dist # 上传到serveless的代码
+  # 执行shell命令，如果直接把命令写在这里，在window下会使用CMD执行，会有兼容性问题！
+  # 、(mac可用./ ./\, 不可省略, win可用.\ .\\, 可省略)
+  preDeployCmd:
+    - run: ./s_deploy.sh  
+      path: ./scripts # 路径
+  runCodeCmd: # 代码启动命令
+    - nginx
+    - '-c'
+    - /code/nginx.conf
+    - '-g'
+    - daemon off;
+  cipherSuites: # 加密套件
+    - TLS_RSA_WITH_AES_128_CBC_SHA
+    - TLS_RSA_WITH_AES_256_CBC_SHA
+    - TLS_RSA_WITH_AES_128_GCM_SHA256
+    - TLS_RSA_WITH_AES_256_GCM_SHA384
+    - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+    - TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+    - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+    - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+    - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+    - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+    - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+    - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+    - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+    - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+    - TLS_RSA_WITH_RC4_128_SHA
+    - TLS_RSA_WITH_3DES_EDE_CBC_SHA
+    - TLS_RSA_WITH_AES_128_CBC_SHA256
+    - TLS_ECDHE_ECDSA_WITH_RC4_128_SHA
+    - TLS_ECDHE_RSA_WITH_RC4_128_SHA
+    - TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+    - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+    - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+
+## 全局命令
+# actions:
+#   pre-deploy: # 部署前执行以下命令
+#     # 执行shell命令，如果直接把命令写在这里，在window下会使用CMD执行，会有兼容性问题！
+#     # 使用.\路径兼容mac和windows, (mac可用./ .\, 不可省略, win可用.\, 可省略)
+#     - run: .\cp.sh
+#       path: .\ # 路径
+
+services:
+  cn-shenzhen-lowcode-nest: # 服务/模块名, 不参与部署
+    component: fc # 函数组件名?，devs2app/fc | fc
+    # 局部命令，不同的模块执行不同的命令
+    actions:
+      pre-deploy: ${config.preDeployCmd} # 部署前执行以下命令
+    # 主要配置！！！
+    props:
+      region: ${config.region} # 地区名
+      service: # 服务配置
+        name: ${config.serviceName}
+        description:  ${config.serviceDescription}
+        internetAccess: true # 设为true让function可以访问公网
+        role: acs:ram::1110941952716916:role/AliyunFcDefaultRole # 授予函数计算所需权限的RAM role
+        tracingConfig: Disable # 链路追踪，可取值：Enable、Disable
+        ossMountConfig: # oss配置？
+          mountPoints: []
+      function: # 函数配置
+        # name: schema
+        codeUri: ${config.codeUri}
+        runtime: custom
+        handler: index.handler
+        environmentVariables: # 环境变量, 会显示在阿里云网址配置上
+          ## 此配置不能删除!
+          PATH: /opt/nodejs16/bin:/usr/local/bin/apache-maven/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ruby/bin:/opt/bin:/code:/code/bin
+          LD_LIBRARY_PATH: /code:/code/lib:/usr/local/lib:/opt/lib:/opt/php8.1/lib:/opt/php8.0/lib:/opt/php7.2/lib
+          NODE_PATH: /opt/nodejs/node_modules
+          DEPLOY_TIME: ${env.DEPLOY_TIME}
+        timeout: 60
+        diskSize: 512
+        caPort: 9000
+        layers:
+          - acs:fc:cn-shenzhen:official:layers/Nodejs16/versions/2
+        customRuntimeConfig:
+          command: ${config.runCodeCmd}
+        instanceType: e1
+        cpu: 0.35
+        instanceConcurrency: 20
+        memorySize: 512
+        asyncConfiguration: { # 异步配置
+          destinationConfig: {}
+        }
+      triggers:
+        - name: defaultTrigger
+          description: 
+          type: http
+          qualifier: LATEST
+          config:
+            methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            authType: anonymous
+            disableURLInternet: false

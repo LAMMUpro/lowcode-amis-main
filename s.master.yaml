@@ -1,0 +1,38 @@
+extend: s.yaml
+
+## 配置
+config:
+  functionName: env_master # 函数名
+  customDomainName: amiseditor.lammu.cn # 自定义域名
+  certId: 0 # SSL证书ID
+
+services:
+  cn-shenzhen-lowcode-nest: # 服务/模块名, 不参与部署
+    props:
+      function: # 函数配置
+        name: ${config.functionName}
+        environmentVariables:
+          DATABASE_URL: ${env.DATABASE_URL_test}
+          OSS_Region: ${env.OSS_Region_test}
+          OSS_Bucket: ${env.OSS_Bucket_test}
+          OSS_RAM_AccessKey_ID: ${env.OSS_RAM_AccessKey_ID_test}
+          OSS_RAM_AccessKey_Secret: ${env.OSS_RAM_AccessKey_Secret_test}
+      customDomains: # [自定义域名](https://docs.serverless-devs.com/fc/yaml/customDomains)
+        - domainName: ${config.customDomainName} # 域名(不带http[s]://)，需要预先手动配置域名解析!!!, 如果是auto取值，系统则会默认分配域名
+          protocol: HTTP,HTTPS # 协议，取值：HTTP, HTTPS
+          certId: ${config.certId} # 域名证书Id(Id到数字证书管理服务中心, 证书详情里面找)
+          tlsConfig:
+            minVersion: TLSv1.2 # TLS协议版本
+            maxVersion: TLSv1.2
+            cipherSuites: ${config.cipherSuites}
+          routeConfigs: # 路由配置
+            - path: /* # 路径
+              serviceName: ${config.serviceName} # 服务名
+              functionName: ${config.functionName} # 函数名
+              qualifier: LATEST
+              methods: # 这个配置serveless官网没写, 但是可以配置, 不然只支持GET/POST/PUT/DELETE, 会导致OPTIONS预检失败!!!
+                - GET
+                - POST
+                - PUT
+                - DELETE
+                - OPTIONS
