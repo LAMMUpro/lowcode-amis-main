@@ -1,0 +1,17 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "tpl",
+      "tpl": "官网页面",
+      "wrapperComponent": "",
+      "inline": false
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "pullRefresh": {
+    "disabled": true
+  }
+}

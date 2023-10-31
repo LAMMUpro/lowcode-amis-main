@@ -12,9 +12,12 @@ import SchemaRender from "@/components/SchemaRender";
 import loginSchema from "@/schema/login.json";
 import registerSchema from "@/schema/register.json";
 import resetPswSchema from "@/schema/resetPsw.json";
+import indexSchema from "@/schema/index.json";
+import homeSchema from "@/schema/home.json";
 import Page404 from '@/pages/404';
 const Preview = React.lazy(() => import('@/pages/preview'));
 const Editor = React.lazy(() => import('@/pages/editor'));
+
 
 export default function (): JSX.Element {
   const store = ((window as any).store = MainStore.create(
@@ -84,14 +87,17 @@ const RootRoute = observer(function ({store}: {store: StoreType}) {
           fallback={<Spinner overlay className="m-t-lg" size="lg" />}
         >
           <Switch>
-            <Route path="/login" component={() => <SchemaRender schema={loginSchema}/>} />
-            <Route path="/register" component={() => <SchemaRender schema={registerSchema}/>} />
-            <Route path="/resetPsw" component={() => <SchemaRender schema={resetPswSchema}/>} />
+            <Route path="/login" exact component={() => <SchemaRender schema={loginSchema}/>} />
+            <Route path="/register" exact component={() => <SchemaRender schema={registerSchema}/>} />
+            <Route path="/resetPsw" exact component={() => <SchemaRender schema={resetPswSchema}/>} />
+
+            <Route path="/home" exact component={() => <SchemaRender schema={homeSchema}/>} />
 
             <Route path="/preview/:id" component={Preview} />
             <Route path="/editor/:path" component={Editor} />
-            
-            <Redirect to={`/preview/404`} from={`/`} exact />
+
+            <Route path="/" exact component={() => <SchemaRender schema={indexSchema}/>} />
+
             <Route component={Page404} />
           </Switch>
         </React.Suspense>

@@ -1,0 +1,17 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "tpl",
+      "tpl": "个人中心",
+      "wrapperComponent": "",
+      "inline": false
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "pullRefresh": {
+    "disabled": true
+  }
+}
