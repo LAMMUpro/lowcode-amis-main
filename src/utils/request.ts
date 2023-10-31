@@ -16,7 +16,7 @@ export function request(
   }
 ) {
   return amisRequest({
-    url: host + (env === 'localhost' ? url : url.replace(/^\/api/, '')),
+    url,
     method: method.toLowerCase(),
     data,
     headers: options.headers,
@@ -24,13 +24,15 @@ export function request(
 }
 
 export function amisRequest ({
-  url, // 接口地址
+  url: _url, // 接口地址
   method, // 请求方法 get、post、put、delete
   data, // 请求数据
   responseType,
   config, // 其他配置
   headers // 请求头
 }: any) {
+  /** url处理，加上pathname | 处理/api问题 */
+  const url = host + (env === 'localhost' ? _url : _url.replace(/^\/api/, ''))
   config = config || {};
   config.withCredentials = true;
   responseType && (config.responseType = responseType);
