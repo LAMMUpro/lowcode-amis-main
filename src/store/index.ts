@@ -25,7 +25,7 @@ export const MainStore = types
     /** 当前选中的schema */
     currentSchema: types.frozen(),
     /** schema加载中 */
-    isSchemaLoading: true,
+    isSchemaLoading: false,
     /** 有可以保存的schema */
     haveNotSave: false,
   })
