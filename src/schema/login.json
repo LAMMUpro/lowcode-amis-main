@@ -1,10 +1,9 @@
 {
   "type": "page",
-  "title": "登录页",
   "body": [
     {
-      "id": "u:0f4d15e1a921",
       "type": "form",
+      "id": "u:0f4d15e1a921",
       "title": "登录账号",
       "mode": "horizontal",
       "dsType": "api",
@@ -40,6 +39,26 @@
           },
           "validationErrors": {
           }
+        },
+        {
+          "type": "tpl",
+          "tpl": "没有账号, ",
+          "inline": true,
+          "wrapperComponent": "",
+          "id": "u:423347328019",
+          "themeCss": {
+            "baseControlClassName": {
+              "boxShadow:default": " 0px 0px 0px 0px transparent"
+            }
+          }
+        },
+        {
+          "type": "link",
+          "value": "http://www.baidu.com/",
+          "id": "u:153e7d711a23",
+          "body": "前往注册",
+          "href": "/register",
+          "blank": false
         }
       ],
       "actions": [
@@ -71,13 +90,13 @@
       "headerClassName": ""
     }
   ],
-  "id": "u:959f6b872d24",
-  "pullRefresh": {
-    "disabled": true
-  },
   "regions": [
     "body"
   ],
+  "pullRefresh": {
+    "disabled": true
+  },
+  "id": "u:959f6b872d24",
   "themeCss": {
     "baseControlClassName": {
       "boxShadow:default": " 0px 0px 0px 0px transparent"
@@ -86,6 +105,7 @@
       "boxShadow:default": " 0px 0px 0px 0px transparent"
     }
   },
+  "title": "登录页",
   "wrapperCustomStyle": {
     "root": {
       "height": "100%"
