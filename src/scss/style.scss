@@ -67,6 +67,9 @@ html {
       &.is-open > a {
         
       }
+      .cxd-AsideNav-itemLabel:hover {
+        color: #2468f2;
+      }
       .cxd-AsideNav-subList {
         background-color: transparent;
         color: var(--text-color);
