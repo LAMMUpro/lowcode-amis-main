@@ -1,7 +1,7 @@
 
 import { request } from "src/utils";
 import { PageSchemaDtoCreate, PageSchemaDtoUpdate } from 'src/types/dto/PageSchema';
-import undefinedSchema from '@/schema/undefined.json';
+import defaultSchema from '@/schema/default.json';
 
 /**
  * 添加一个页面schema
@@ -23,7 +23,7 @@ export async function deletePageSchemaById(params: { nodeId: number }) {
 export async function findPageSchemaByNodeId(params: { nodeId: number }) {
   const res = await request('GET', `/api/page-schema/${params.nodeId}`, {});
   if (res.code == 1) {
-    res.data.schema = res.data.schema ? JSON.parse(res.data.schema) : undefinedSchema;
+    res.data.schema = res.data.schema ? JSON.parse(res.data.schema) : defaultSchema;
   }
   return res;
 }
