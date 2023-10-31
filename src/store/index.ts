@@ -1,32 +1,33 @@
-import {types, getEnv, applySnapshot, getSnapshot, Instance} from 'mobx-state-tree';
-import {PageStore} from './Page';
-import {when, reaction} from 'mobx';
-
-let pagIndex = 1;
+import {types, getEnv, applySnapshot, getSnapshot, Instance, flow} from 'mobx-state-tree';
+import {PageNodeStore} from './PageNode';
+import {reaction} from 'mobx';
+import { findManyPageNode } from '@/api/PageNode';
 
 export const MainStore = types
   .model('MainStore', {
-    pages: types.optional(types.array(PageStore), [
-      {
-        id: `${pagIndex}`,
-        path: 'hello-world',
-        label: 'Hello world',
-        icon: 'fa fa-file',
-        schema: {
-          type: 'page',
-          title: 'Hello world',
-          body: '初始页面'
-        }
-      }
-    ]),
-    theme: 'cxd',
-    asideFixed: true,
-    asideFolded: false,
+    /** 未知用途？？？ */
     offScreen: false,
-    addPageIsOpen: false,
-    preview: false,
+
+    /** 菜单节点树 */
+    pageNodes: types.optional(types.array(PageNodeStore), []),
+    /** 菜单叶节点id */
+    leafIds: types.optional(types.array(types.number), []),
+    /** 主题（cxd-云舍 | antd） */
+    theme: 'cxd',
+    /** 新增页面弹窗是否显示 */
+    isShowAddPageDialog: false,
+    /** 编辑器中页面是否为预览态 */
+    isPreview: false,
+    /** 是否移动端 */
     isMobile: false,
-    schema: types.frozen()
+    /** 当前选中的菜单叶节点id */
+    currentNodeId: 0,
+    /** 当前选中的schema */
+    currentSchema: types.frozen(),
+    /** schema加载中 */
+    isSchemaLoading: true,
+    /** 有可以保存的schema */
+    haveNotSave: false,
   })
   .views(self => ({
     get fetcher() {
@@ -43,69 +44,61 @@ export const MainStore = types
     }
   }))
   .actions(self => {
-    function toggleAsideFolded() {
-      self.asideFolded = !self.asideFolded;
+    function updateHaveNotSave(value: boolean) {
+      self.haveNotSave = value;
     }
-
-    function toggleAsideFixed() {
-      self.asideFixed = !self.asideFixed;
-    }
-
+    
     function toggleOffScreen() {
       self.offScreen = !self.offScreen;
     }
 
-    function setAddPageIsOpen(isOpened: boolean) {
-      self.addPageIsOpen = isOpened;
+    function toggleAddPageDialogShow(isShow: boolean) {
+      self.isShowAddPageDialog = isShow;
     }
 
-    function addPage(data: {
-      label: string;
-      path: string;
-      icon?: string;
-      schema?: any;
-    }) {
-      self.pages.push(
-        PageStore.create({
-          ...data,
-          id: `${++pagIndex}`
-        })
-      );
-    }
-
-    function removePageAt(index: number) {
-      self.pages.splice(index, 1);
-    }
-
-    function updatePageSchemaAt(index: number) {
-      self.pages[index].updateSchema(self.schema);
-    }
-
-    function updateSchema(value: any) {
-      self.schema = value;
-    }
+    /** 更新菜单节点 */
+    const updatePageNodes = flow (function *() {
+      const res = yield findManyPageNode({
+        applicationId: 1,
+        version: '1.0.0'
+      });
+      if (res.code == 1 && res.data?.[0]) {
+        self.pageNodes.splice(0, 1, res.data[0]);
+        self.leafIds = res.leafIds;
+      }
+    })
 
     function setPreview(value: boolean) {
-      self.preview = value;
+      self.isPreview = value;
     }
 
     function setIsMobile(value: boolean) {
       self.isMobile = value;
     }
 
+    function updateCurrentNodeId(value: number) {
+      self.currentNodeId = value;
+    }
+
+    function updateCurrentSchema(value: number) {
+      self.currentSchema = value;
+    }
+
+    function updateSchemaLoading(value: boolean) {
+      self.isSchemaLoading = value;
+    }
+
     return {
-      toggleAsideFolded,
-      toggleAsideFixed,
+      updateHaveNotSave,
+      updateCurrentNodeId,
+      updateCurrentSchema,
+      updateSchemaLoading,
       toggleOffScreen,
-      setAddPageIsOpen,
-      addPage,
-      removePageAt,
-      updatePageSchemaAt,
-      updateSchema,
+      toggleAddPageDialogShow,
       setPreview,
       setIsMobile,
+      updatePageNodes,
       afterCreate() {
-        // persist store
         if (typeof window !== 'undefined' && window.localStorage) {
           const storeData = window.localStorage.getItem('store');
           if (storeData) applySnapshot(self, JSON.parse(storeData));

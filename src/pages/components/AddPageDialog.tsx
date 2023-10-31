@@ -6,41 +6,41 @@ import {schema2component} from '@/components/SchemaRender';
 export default schema2component(
   {
     type: 'dialog',
-    title: '新增页面',
+    title: '新增菜单',
     body: {
       type: 'form',
       controls: [
         {
-          type: 'text',
-          label: '名称',
-          name: 'label',
+          type: 'input-text',
+          label: '菜单英文名',
+          name: 'name',
           validations: {
             maxLength: 20
           },
           required: true
         },
-
         {
-          type: 'text',
-          label: '路径',
-          name: 'path',
+          type: 'input-text',
+          label: '菜单中文名',
+          name: 'nameCh',
           validations: {
-            isUrlPath: true
+            maxLength: 20
           },
-          required: true,
-          validate(values: any, value: string) {
-            const exists = !!values.pages.filter(
-              (item: any) => item.path === value
-            ).length;
-            return exists ? '当前路径已被占用，请换一个' : '';
-          }
+          required: true
         },
-
         {
-          type: 'icon-picker',
-          label: '图标',
-          name: 'icon'
-        }
+          type: "tree-select",
+          label: "父节点",
+          name: "parentId",
+          required: false,
+          source: '/api/page-node?applicationId=1&version=1.0.0',
+        },
+        //TODO图标扩展
+        // {
+        //   type: 'icon-picker',
+        //   label: '菜单图标',
+        //   name: 'icon'
+        // },
       ]
     }
   },

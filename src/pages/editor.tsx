@@ -1,22 +1,12 @@
 import React from 'react';
-import {toast, Select} from 'amis';
+import {toast, Select, Button} from 'amis';
 import {currentLocale} from 'i18n-runtime';
 import {inject, observer} from 'mobx-react';
 import {Editor, ShortcutKey} from 'amis-editor';
 import {RouteComponentProps} from 'react-router-dom';
 import {StoreType} from '@/store';
 import {Icon} from '@/icons/index';
-
-let currentIndex = -1;
-
-let host = `${window.location.protocol}//${window.location.host}`;
-
-// 如果在 gh-pages 里面
-if (/^\/amis-editor-demo/.test(window.location.pathname)) {
-  host += '/amis-editor';
-}
-
-const schemaUrl = `${host}/schema.json`;
+import { updatePageSchemaById } from '@/api/PageSchema';
 
 const editorLanguages = [
   {
@@ -34,39 +24,37 @@ export default inject('store')(
     store,
     location,
     history,
-    match
   }: {store: StoreType} & RouteComponentProps<{id: string}>) {
-    const index: number = parseInt(match.params.id, 10);
-    const curLanguage = currentLocale(); // 获取当前语料类型
+    const currentLanguage = currentLocale(); // 获取当前语料类型
 
-    if (index !== currentIndex) {
-      currentIndex = index;
-      store.updateSchema(store.pages[index].schema);
+    /** 保存当前schema到服务器 */
+    async function saveSchema() {
+      const res = await updatePageSchemaById({
+        id: store.currentNodeId,
+        schema: JSON.stringify(store.currentSchema),
+      })
+      if (res.code == 1) {
+        store.updateHaveNotSave(false);
+        toast.success('保存成功', '提示');
+      }
     }
 
-    function save() {
-      store.updatePageSchemaAt(index);
-      toast.success('保存成功', '提示');
+    /** 实时更新当前schema */
+    function onSchemaChange(value: any) {
+      store.updateHaveNotSave(true);
+      store.updateCurrentSchema(value);
     }
 
-    function onChange(value: any) {
-      store.updateSchema(value);
-      store.updatePageSchemaAt(index);
-    }
-
-    function changeLocale(value: string) {
+    /** 语言切换 */
+    function onLocaleChange(value: string) {
       localStorage.setItem('suda-i18n-locale', value);
       window.location.reload();
-    }
-
-    function exit() {
-      history.push(`/preview/${store.pages[index].path}`);
     }
 
     return (
       <div className="Editor-Demo">
         <div className="Editor-header">
-          <div className="Editor-title">amis 可视化编辑器</div>
+          <div className="Editor-title">Amis 可视化编辑器</div>
           <div className="Editor-view-mode-group-container">
             <div className="Editor-view-mode-group">
               <div
@@ -97,22 +85,31 @@ export default inject('store')(
             <Select
               className="margin-left-space"
               options={editorLanguages}
-              value={curLanguage}
+              value={currentLanguage}
               clearable={false}
-              onChange={(e: any) => changeLocale(e.value)}
+              onChange={(e: any) => onLocaleChange(e.value)}
             />
+            <Button
+              size="sm"
+              className={`mr-1 ml-3 px-6`}
+              level={store.haveNotSave? 'danger':''}
+              disabled={!store.haveNotSave}
+              onClick={saveSchema}
+            >
+              保存
+            </Button>
             <div
               className={`header-action-btn m-1 ${
-                store.preview ? 'primary' : ''
+                store.isPreview ? 'primary' : ''
               }`}
               onClick={() => {
-                store.setPreview(!store.preview);
+                store.setPreview(!store.isPreview);
               }}
             >
-              {store.preview ? '编辑' : '预览'}
+              {store.isPreview ? '编辑' : '预览'}
             </div>
-            {!store.preview && (
-              <div className={`header-action-btn exit-btn`} onClick={exit}>
+            {!store.isPreview && (
+              <div className={`header-action-btn exit-btn`} onClick={()=>history.push(location.pathname.replace(`/editor`, `/preview`) )}>
                 退出
               </div>
             )}
@@ -120,17 +117,14 @@ export default inject('store')(
         </div>
         <div className="Editor-inner">
           <Editor
-            theme={'cxd'}
-            preview={store.preview}
-            isMobile={store.isMobile}
-            value={store.schema}
-            onChange={onChange}
-            onPreview={() => {
-              store.setPreview(true);
-            }}
-            onSave={save}
             className="is-fixed"
-            $schemaUrl={schemaUrl}
+            theme={'cxd'}
+            isMobile={store.isMobile}
+            preview={store.isPreview}
+            value={store.currentSchema}
+            onChange={onSchemaChange}
+            onPreview={() => {store.setPreview(true);}}
+            onSave={saveSchema}
             showCustomRenderersPanel={true}
             amisEnv={{
               fetcher: store.fetcher,

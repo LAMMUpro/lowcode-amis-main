@@ -8,7 +8,7 @@ import {getEnv} from 'mobx-state-tree';
 import {StoreType} from '@/store';
 import qs from 'qs';
 import {render as amisRender, utils, filter} from 'amis';
-import { request } from '@/utils';
+import { amisRequest } from '@/utils';
 
 export function schema2component(
   schema: any,
@@ -210,7 +210,7 @@ export function schema2component(
         { 
           ...this.getEnv(),
           /** 自带的有问题, 自己实现一个 */
-          fetcher: request
+          fetcher: amisRequest
         }
       );
 

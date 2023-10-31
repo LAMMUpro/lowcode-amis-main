@@ -1,6 +1,29 @@
 import axios from 'axios';
+import { host } from './index';
 
-export function request ({
+export function request(
+  method: requestMethods = "GET",
+  url: string,
+  data: BaseObj<any> = {},
+  options: {
+    mode?: "no-cors" | "cors" | "same-origin"
+    headers?: any
+  } = {
+    headers: {
+      /** 将Content-Type设置成application/json会受到同源政策的限制。他会先发送一个option请求嗅探服务器是否具有应答的能力，然后才会发送真正的请求。 */
+      'Content-Type':'application/json'
+    }
+  }
+) {
+  return amisRequest({
+    url: host + url,
+    method: method.toLowerCase(),
+    data,
+    headers: options.headers,
+  }).then((response: any) => response.data);
+}
+
+export function amisRequest ({
   url, // 接口地址
   method, // 请求方法 get、post、put、delete
   data, // 请求数据
@@ -38,6 +61,6 @@ export function request ({
     config.headers = config.headers || {};
     config.headers['Content-Type'] = 'application/json';
   }
-
+  
   return (axios as any)[method](url, data, config);
 }

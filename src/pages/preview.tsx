@@ -1,13 +1,13 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
-import {Button, AsideNav, Layout, confirm} from 'amis';
-import {RouteComponentProps, matchPath, Switch, Route} from 'react-router';
+import {Button, AsideNav, Layout, confirm, Spinner} from 'amis';
+import {RouteComponentProps, matchPath} from 'react-router';
 import {StoreType} from '@/store';
 import NotFound from '@/pages/404';
-import defaultSchema from '@/schema/default.json';
 import SchemaRender from '@/components/SchemaRender';
 import AddPageDialog from '@/pages/components/AddPageDialog';
+import { createPageNode } from '@/api/PageNode';
+import { findPageSchemaByNodeId } from '@/api/PageSchema';
 
 function isActive(link: any, location: any) {
   const ret = matchPath(location?.pathname, {
@@ -15,7 +15,6 @@ function isActive(link: any, location: any) {
     exact: true,
     strict: true
   });
-
   return !!ret;
 }
 
@@ -39,7 +38,7 @@ export default inject('store')(
                 <Button
                   size="sm"
                   level="info"
-                  onClick={() => store.setAddPageIsOpen(true)}
+                  onClick={() => store.toggleAddPageDialogShow(true)}
                 >
                   新增页面
                 </Button>
@@ -52,168 +51,158 @@ export default inject('store')(
 
     /** 预览页侧边栏菜单 */
     function renderAside() {
-      const navigations = store.pages.map(item => ({
-        label: item.label,
-        path: `/${item.path}`,
-        icon: item.icon
-      }));
-      const paths = navigations.map(item => item.path);
+      /** 菜单节点切换，获取schema并预览 */
+      async function schemaChange(link: any) {
+        store.updateSchemaLoading(true);
+        const res = await findPageSchemaByNodeId({ nodeId: link.value });
+        setTimeout(()=> store.updateSchemaLoading(false), 250);
+        if (res.code == 1) {
+          store.updateCurrentNodeId(res.data.nodeId);
+          store.updateCurrentSchema(res.data.schema);
+          store.updateHaveNotSave(false);
+          history.push(`/preview${link.path}`);
+        } else {
+          throw '获取节点schema失败';
+        }
+        return `/preview${link.path}`;
+      }
+
+      /** 点击菜单节点编辑按钮 */
+      function handleEdit(link: any) {
+        /** 是当前预览节点 */
+        if (link.value === store.currentNodeId) {
+          history.push(location.pathname.replace(`/preview`, `/editor`) );
+        } else { /** 不是当前预览节点 */
+          schemaChange(link).then((pathname: string)=>{
+            history.push(pathname.replace(`/preview`, `/editor`) );
+          })
+        }
+      }
 
       return (
         <AsideNav
-          key={store.asideFolded ? 'folded-aside' : 'aside'}
-          navigations={[
-            {
-              label: '导航菜单',
-              children: navigations
-            }
-          ]}
+          // 导航菜单数据列表
+          navigations={store.pageNodes}
           renderLink={({link, toggleExpand, classnames: cx, depth}: any) => {
-            if (link.hidden) {
-              return null;
-            }
+            if (link.hidden) return null;
 
             let children = [];
 
-            if (link.children) {
-              children.push(
-                <span
-                  key="expand-toggle"
-                  className={cx('AsideNav-itemArrow')}
-                  onClick={e => toggleExpand(link, e)}
-                ></span>
-              );
-            }
-
-            link.badge &&
-              children.push(
-                <b
-                  key="badge"
-                  className={cx(
-                    `AsideNav-itemBadge`,
-                    link.badgeClassName || 'bg-info'
-                  )}
-                >
-                  {link.badge}
-                </b>
-              );
-
-            if (link.icon) {
-              children.push(
-                <i key="icon" className={cx(`AsideNav-itemIcon`, link.icon)} />
-              );
-            } else if (store.asideFolded && depth === 1) {
+            if (link.children?.length) {
               children.push(
                 <i
                   key="icon"
                   className={cx(
                     `AsideNav-itemIcon`,
-                    link.children ? 'fa fa-folder' : 'fa fa-info'
+                    'fa fa-angle-down'
                   )}
                 />
               );
             }
 
-            link.active ||
-              children.push(
-                <i
-                  key="delete"
-                  data-tooltip="删除"
-                  data-position="bottom"
-                  className={'navbtn fa fa-times'}
-                  onClick={(e: React.MouseEvent) => {
-                    e.preventDefault();
-                    confirm('确认要删除').then(confirmed => {
-                      confirmed && store.removePageAt(paths.indexOf(link.path));
-                    });
-                  }}
-                />
-              );
+            /** 徽标 */
+            if (link.badge) children.push(
+              <b
+                key="badge"
+                className={cx(
+                  `AsideNav-itemBadge`,
+                  link.badgeClassName || 'bg-info'
+                )}
+              >
+                {link.badge}
+              </b>
+            );
 
+            /** 菜单图标 */
+            if (link.icon) {
+              children.push(
+                <i key="icon" className={cx(`AsideNav-itemIcon`, link.icon)} />
+              );
+            }
+
+            /** 删除图标 */
             children.push(
+              <i
+                key="delete"
+                data-tooltip="删除"
+                data-position="bottom"
+                className={'navbtn fa fa-times'}
+                onClick={(e: React.MouseEvent) => {
+                  e.preventDefault();
+                  confirm('确认要删除').then(confirmed => {
+                    confirmed && { /** TODO */};
+                  });
+                }}
+              />
+            );
+            
+            /** 编辑图标 */
+            if (store.leafIds.includes(link.value)) children.push(
               <i
                 key="edit"
                 data-tooltip="编辑"
                 data-position="bottom"
                 className={'navbtn fa fa-pencil'}
                 onClick={(e: React.MouseEvent) => {
-                  e.preventDefault();
-                  history.push(`/edit/${paths.indexOf(link.path)}`);
+                  e.stopPropagation();
+                  handleEdit(link);
                 }}
               />
             );
 
+            /** 菜单名称 */
             children.push(
               <span key="label" className={cx('AsideNav-itemLabel')}>
-                {link.label}
+                {link.nameCh}
               </span>
             );
 
-            return link.path ? (
-              link.active ? (
-                <a>{children}</a>
-              ) : (
-                <Link to={`/preview${link.path}`}>
-                  {children}
-                </Link>
-              )
-            ) : (
-              <a
-                onClick={
-                  link.onClick
-                    ? link.onClick
-                    : link.children
-                    ? () => toggleExpand(link)
-                    : undefined
-                }
-              >
+            return (link.active || link.children?.length) ? 
+              <a onClick={e => toggleExpand(link, e)}>{children}</a> : 
+              <a onClick={()=>schemaChange(link)} >
                 {children}
               </a>
-            );
           }}
-          isActive={(link: any) =>
-            isActive(
-              link.path && link.path[0] === '/' ? link.path : `${link.path}`,
-              location
-            )
-          }
+          isActive={ (link: any) => isActive(link.path, location) }
         />
       );
     }
 
     /** 新增页面, 确定 */
-    function handleConfirm(value: {label: string; icon: string; path: string}) {
-      store.addPage({
+    async function handleConfirm(value: {parentId: number; name: string; nameCh: string}) {
+      const res = await createPageNode({
         ...value,
-        schema: defaultSchema
-      });
-      store.setAddPageIsOpen(false);
+        "describe": "",
+        "applicationId": 1,
+        "version": "1.0.0",
+        "icon": ""
+      })
+      if (res.code == 1) {
+        store.toggleAddPageDialogShow(false);
+        await store.updatePageNodes();
+        console.log(store.pageNodes.concat());
+      }
     }
 
     return (
       <Layout
         aside={renderAside()}
         header={renderHeader()}
-        folded={store.asideFolded}
         offScreen={store.offScreen}
       >
-        {/* 预览区 */}
-        <Switch>
-          {store.pages.map((item: any) => (
-            <Route
-              key={item.id}
-              path={`/preview/${item.path}`}
-              render={() => <SchemaRender schema={item.schema} />}
-            />
-          ))}
-          <Route component={NotFound} />
-        </Switch>
+        {/* 预览区, //TODO加载遮罩 */}
+        {
+          store.isSchemaLoading ? 
+            <Spinner overlay size="lg" show={store.isSchemaLoading} /> :
+            store.currentSchema ? 
+              <SchemaRender schema={store.currentSchema} /> : 
+              <NotFound />
+        }
         {/* 新增页面弹窗 */}
         <AddPageDialog
-          show={store.addPageIsOpen}
-          onClose={() => store.setAddPageIsOpen(false)}
+          show={store.isShowAddPageDialog}
+          onClose={() => store.toggleAddPageDialogShow(false)}
           onConfirm={handleConfirm}
-          pages={store.pages.concat()}
         />
       </Layout>
     );

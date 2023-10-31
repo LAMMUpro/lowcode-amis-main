@@ -64,6 +64,9 @@ export default function (): JSX.Element {
     }
   ));
 
+  /** 获取菜单节点信息 */
+  store.updatePageNodes();
+
   return (
     <Provider store={store}>
       <RootRoute store={store} />
@@ -86,7 +89,7 @@ const RootRoute = observer(function ({store}: {store: StoreType}) {
             <Route path="/resetPsw" component={() => <SchemaRender schema={resetPswSchema}/>} />
 
             <Route path="/preview/:id" component={Preview} />
-            <Route path="/edit/:id" component={Editor} />
+            <Route path="/editor/:path" component={Editor} />
             
             <Redirect to={`/preview/404`} from={`/`} exact />
             <Route component={Page404} />
