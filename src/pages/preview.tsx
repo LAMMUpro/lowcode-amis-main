@@ -36,6 +36,13 @@ export default inject('store')(
             <div className="">
               <div className="hidden-xs p-t-sm ml-auto px-2">
                 <Button
+                  size="sm mr-2"
+                  level="normal"
+                  onClick={() => history.push('/home') }
+                >
+                  工作台
+                </Button>
+                <Button
                   size="sm"
                   level="info"
                   onClick={() => store.toggleAddPageDialogShow(true)}
