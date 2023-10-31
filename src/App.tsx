@@ -93,6 +93,7 @@ const RootRoute = observer(function ({store}: {store: StoreType}) {
 
             <Route path="/home" exact component={() => <SchemaRender schema={homeSchema}/>} />
 
+            <Route path="/preview" exact component={Preview} />
             <Route path="/preview/:id" component={Preview} />
             <Route path="/editor/:path" component={Editor} />
 
