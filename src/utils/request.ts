@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { host } from './index';
+import { host, env } from './index';
 
 export function request(
   method: requestMethods = "GET",
@@ -16,7 +16,7 @@ export function request(
   }
 ) {
   return amisRequest({
-    url: host + url,
+    url: host + (env === 'localhost' ? url : url.replace(/^\/api/, '')),
     method: method.toLowerCase(),
     data,
     headers: options.headers,
