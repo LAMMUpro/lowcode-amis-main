@@ -14,6 +14,7 @@ module.exports = {
       extensions: ['.js', '.jsx', '.ts', '.tsx','.esm.js', '.umd.js', '.min.js', '.json'], // 用于配置webpack在尝试过程中用到的后缀列表
       alias: {
         '@': resolve('src'),
+        'src': resolve('src'),
         // $function: resolve('src/function'),
         // $utils: resolve('src/utils'),
       },
