@@ -42,7 +42,7 @@ export default function (): JSX.Element {
           !(data instanceof Blob) &&
           !(data instanceof ArrayBuffer)
         ) {
-          data = JSON.stringify(data);
+          // data = JSON.stringify(data);
           config.headers['Content-Type'] = 'application/json';
         }
 
