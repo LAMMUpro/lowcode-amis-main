@@ -1,4 +1,4 @@
-import { ApplicationDtoCreate, ApplicationDtoUpdate } from "src/types/dto/api/application";
+import { ApplicationDtoCreate, ApplicationDtoUpdate } from "src/types/dto/application";
 import { request } from "src/utils";
 
 /**
