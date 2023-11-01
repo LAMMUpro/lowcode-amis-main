@@ -187,7 +187,6 @@ export default inject('store')(
       if (res.code == 1) {
         store.toggleAddPageDialogShow(false);
         await store.updatePageNodes();
-        console.log(store.pageNodes.concat());
       }
     }
 
