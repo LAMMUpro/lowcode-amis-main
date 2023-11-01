@@ -2,13 +2,16 @@ import {types, getEnv, applySnapshot, getSnapshot, Instance, flow} from 'mobx-st
 import {PageNodeStore} from './PageNode';
 import {reaction} from 'mobx';
 import { findManyPageNode } from '@/api/PageNode';
+import { findAllApplication } from '@/api/Application';
 
 export const MainStore = types
   .model('MainStore', {
     /** 未知用途？？？ */
     offScreen: false,
 
-    /** 菜单节点树 */
+    /** 应用 */
+    appList: types.optional(types.array(types.frozen()), []),
+    /** 菜单节点树 */ 
     pageNodes: types.optional(types.array(PageNodeStore), []),
     /** 菜单叶节点id */
     leafIds: types.optional(types.array(types.number), []),
@@ -20,6 +23,10 @@ export const MainStore = types
     isPreview: false,
     /** 是否移动端 */
     isMobile: false,
+    /** 当前应用id */
+    currentApplicationId: 0,
+    /** 当前应用名称 */
+    currentApplicationName: '',
     /** 当前选中的菜单叶节点id */
     currentNodeId: 0,
     /** 当前选中的schema */
@@ -63,8 +70,16 @@ export const MainStore = types
         version: '1.0.0'
       });
       if (res.code == 1 && res.data?.[0]) {
-        self.pageNodes.splice(0, 1, res.data[0]);
+        self.pageNodes = res.data;
         self.leafIds = res.leafIds;
+      }
+    })
+
+    /** 更新应用列表 */
+    const updateAppList = flow (function *() {
+      const res = yield findAllApplication();
+      if (res.code == 1 && res.data) {
+        self.appList = res.data;
       }
     })
 
@@ -88,16 +103,27 @@ export const MainStore = types
       self.isSchemaLoading = value;
     }
 
+    function updateApplicationId(value: number) {
+      self.currentApplicationId = value;
+    }
+
+    function updateApplicationName(value: string) {
+      self.currentApplicationName = value;
+    }
+
     return {
       updateHaveNotSave,
       updateCurrentNodeId,
       updateCurrentSchema,
       updateSchemaLoading,
+      updateApplicationId,
+      updateApplicationName,
       toggleOffScreen,
       toggleAddPageDialogShow,
       setPreview,
       setIsMobile,
       updatePageNodes,
+      updateAppList,
       afterCreate() {
         if (typeof window !== 'undefined' && window.localStorage) {
           const storeData = window.localStorage.getItem('store');

@@ -67,8 +67,18 @@ export default function (): JSX.Element {
     }
   ));
 
+  store.updateAppList();
+
   /** 获取菜单节点信息 */
-  store.updatePageNodes();
+  store.updatePageNodes().then(()=>{
+    // TODO
+    /** 回显当前页面 */
+    if (store.currentNodeId && store.leafIds.includes(store.currentNodeId)) {
+
+    } else { /** 显示第一个叶节点 */
+
+    }
+  });
 
   return (
     <Provider store={store}>

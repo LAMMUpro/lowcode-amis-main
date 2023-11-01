@@ -31,7 +31,7 @@ export default inject('store')(
           <div className="preview header">
             <div className="cxd-Layout-brand text-ellipsis">
               <i className="fa fa-tv"></i>
-              <span className="hidden-folded m-l-sm">应用名称</span>
+              <span className="hidden-folded m-l-sm">{store.currentApplicationName || '-'}</span>
             </div>
             <div className="">
               <div className="hidden-xs p-t-sm ml-auto px-2">
@@ -185,8 +185,8 @@ export default inject('store')(
         "icon": ""
       })
       if (res.code == 1) {
-        store.toggleAddPageDialogShow(false);
         await store.updatePageNodes();
+        store.toggleAddPageDialogShow(false);
       }
     }
 
@@ -195,6 +195,8 @@ export default inject('store')(
         aside={renderAside()}
         header={renderHeader()}
         offScreen={store.offScreen}
+        // 强制刷新视图标志
+        reRenderFlag={store.leafIds.join(',')}
       >
         {/* 预览区, //TODO加载遮罩 */}
         {
