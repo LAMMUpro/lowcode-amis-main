@@ -156,7 +156,7 @@
           "body": [
             {
               "type": "cards",
-              "columnsCount": 4,
+              "columnsCount": 5,
               "card": {
                 "type": "container",
                 "body": [
@@ -323,11 +323,6 @@
                                             "submitSucc": {
                                               "weight": 0,
                                               "actions": [
-                                                {
-                                                  "ignoreError": false,
-                                                  "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\nstore.updateAppList();\n",
-                                                  "actionType": "custom"
-                                                },
                                                 {
                                                   "ignoreError": false,
                                                   "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\ndoAction({\n  actionType: 'reload',\n  componentName: 'app-list'\n});\n",
@@ -617,8 +612,16 @@
                             "actions": [
                               {
                                 "ignoreError": false,
-                                "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\nstore.updateApplicationId(context.props.data.id);\nstore.updateApplicationName(context.props.data.name);\ndoAction({\n  actionType: 'url',\n  args: {\n    url: '/preview'\n  }\n});\n",
+                                "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\nstore.updateApplicationId(context.props.data.id);\nstore.updateApplicationName(context.props.data.name);\n",
                                 "actionType": "custom"
+                              },
+                              {
+                                "ignoreError": false,
+                                "actionType": "url",
+                                "args": {
+                                  "url": "/preview",
+                                  "blank": false
+                                }
                               }
                             ]
                           }
@@ -845,11 +848,6 @@
             "submitSucc": {
               "weight": 0,
               "actions": [
-                {
-                  "ignoreError": false,
-                  "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\nstore.updateAppList();\n",
-                  "actionType": "custom"
-                },
                 {
                   "ignoreError": false,
                   "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\ndoAction({\n  actionType: 'reload',\n  componentName: 'app-list'\n});\n",
