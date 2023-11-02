@@ -10,7 +10,7 @@ export const MainStore = types
     offScreen: false,
 
     /** 应用 */
-    appList: types.optional(types.array(types.frozen()), []),
+    // appList: types.optional(types.array(types.frozen()), []),
     /** 菜单节点树 */ 
     pageNodes: types.optional(types.array(PageNodeStore), []),
     /** 菜单叶节点id */
@@ -76,12 +76,12 @@ export const MainStore = types
     })
 
     /** 更新应用列表 */
-    const updateAppList = flow (function *() {
-      const res = yield findAllApplication();
-      if (res.code == 1 && res.data) {
-        self.appList = res.data;
-      }
-    })
+    // const updateAppList = flow (function *() {
+    //   const res = yield findAllApplication();
+    //   if (res.code == 1 && res.data) {
+    //     self.appList = res.data;
+    //   }
+    // })
 
     function setPreview(value: boolean) {
       self.isPreview = value;
@@ -123,7 +123,7 @@ export const MainStore = types
       setPreview,
       setIsMobile,
       updatePageNodes,
-      updateAppList,
+      // updateAppList,
       afterCreate() {
         if (typeof window !== 'undefined' && window.localStorage) {
           const storeData = window.localStorage.getItem('store');

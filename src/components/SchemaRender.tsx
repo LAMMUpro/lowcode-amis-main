@@ -9,6 +9,7 @@ import {StoreType} from '@/store';
 import qs from 'qs';
 import {render as amisRender, utils, filter} from 'amis';
 import { amisRequest } from '@/utils';
+import { injectContext, injectData } from '@/utils/inject';
 
 export function schema2component(
   schema: any,
@@ -193,13 +194,11 @@ export function schema2component(
       body = amisRender(
         finalSchema,
         {
-          data: utils.createObject({
-            ...match.params,
-            amisStore: store,
-            pathname: location.pathname,
-            params: match.params
-          }),
           ...rest,
+          /** （${xxx}）无论哪层都可以使用到这个里面的数据, 优先级低于data */
+          context: injectContext({store}),
+          /** (${xxx})顶层数据域的值 */
+          data: injectData({store, match, location}),
           fetcher: store.fetcher,
           notify: store.notify,
           alert: store.alert,

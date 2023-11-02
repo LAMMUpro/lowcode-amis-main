@@ -67,7 +67,7 @@ export default function (): JSX.Element {
     }
   ));
 
-  store.updateAppList();
+  // store.updateAppList();
 
   /** 获取菜单节点信息 */
   store.updatePageNodes().then(()=>{

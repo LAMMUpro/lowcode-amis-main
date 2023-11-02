@@ -7,6 +7,7 @@ import {RouteComponentProps} from 'react-router-dom';
 import {StoreType} from '@/store';
 import {Icon} from '@/icons/index';
 import { updatePageSchemaById } from '@/api/PageSchema';
+import { injectContext, injectData } from '@/utils/inject';
 
 const editorLanguages = [
   {
@@ -130,7 +131,12 @@ export default inject('store')(
               fetcher: store.fetcher,
               notify: store.notify,
               alert: store.alert,
-              copy: store.copy
+              copy: store.copy,
+            }}
+            data={{
+              /** //TODO context是这样注入吗？ */
+              ...injectContext({store}),
+              ...injectData({store, location}),
             }}
           />
         </div>
