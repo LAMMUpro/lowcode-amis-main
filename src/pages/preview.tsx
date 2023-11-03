@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
-import {Button, AsideNav, Layout, confirm, Spinner} from 'amis';
+import {Button, AsideNav, Layout, confirm, Spinner, toast} from 'amis';
 import {RouteComponentProps, matchPath} from 'react-router';
 import {StoreType} from '@/store';
 import NotFound from '@/pages/404';
@@ -8,6 +8,7 @@ import SchemaRender from '@/components/SchemaRender';
 import AddPageDialog from '@/pages/components/AddPageDialog';
 import { createPageNode } from '@/api/PageNode';
 import { findPageSchemaByNodeId } from '@/api/PageSchema';
+import { findNode } from '@/utils';
 
 function isActive(link: any, location: any) {
   const ret = matchPath(location?.pathname, {
@@ -18,12 +19,50 @@ function isActive(link: any, location: any) {
   return !!ret;
 }
 
+/** 首次进入/preview页面，初始化一下数据 */
+let initFlag = false;
+async function initData(history: any) {
+  if (!window.store.currentApplicationId) {
+    history.push(`/home`);
+    return toast.warning('请先选择应用');
+  }
+  await window.store.updatePageNodes();
+  /** 当前选中节点存在 -> 更新schema -> 跳转到对应路径 */
+  if (window.store.currentNodeId && window.store.leafIds.includes(window.store.currentNodeId)) {
+    const res = await findPageSchemaByNodeId({ nodeId: window.store.currentNodeId });
+    setTimeout(()=> window.store.updateSchemaLoading(false), 250);
+    if (res.code == 1) {
+      window.store.updateCurrentSchema(res.data.schema);
+      window.store.updateHaveNotSave(false);
+      const node = findNode(window.store.pageNodes.concat(), (node: any) => node.value == window.store.currentNodeId);
+      if (node) history.push(`/preview${node.path}`);
+    }
+  } else { /** 当前选中节点不存在 */
+    const node = findNode(window.store.pageNodes.concat(), (node: any) => window.store.leafIds.includes(node.value));
+    if (node) {
+      const res = await findPageSchemaByNodeId({ nodeId: node.value });
+      setTimeout(()=> window.store.updateSchemaLoading(false), 250);
+      if (res.code == 1) {
+        window.store.updateCurrentSchema(res.data.schema);
+        window.store.updateHaveNotSave(false);
+        window.store.updateCurrentNodeId(node.value);
+        history.push(`/preview${node.path}`);
+      }
+    }
+  }
+}
+
 export default inject('store')(
   observer(function ({
     store,
     location,
     history
   }: {store: StoreType} & RouteComponentProps) {
+    if (!initFlag) {
+      initData(history);
+      initFlag = true;
+    }
+    
     /** 预览页头部 */
     function renderHeader() {
       return (
@@ -179,9 +218,10 @@ export default inject('store')(
     async function handleConfirm(value: {parentId: number; name: string; nameCh: string}) {
       const res = await createPageNode({
         ...value,
+        applicationId: store.currentApplicationId,
+        version: store.currentApplicationVersion,
+        /** //TODO描述和图标先不要了 */
         "describe": "",
-        "applicationId": 1,
-        "version": "1.0.0",
         "icon": ""
       })
       if (res.code == 1) {
@@ -211,6 +251,7 @@ export default inject('store')(
           show={store.isShowAddPageDialog}
           onClose={() => store.toggleAddPageDialogShow(false)}
           onConfirm={handleConfirm}
+          disabled={!store.currentApplicationId || !store.currentApplicationVersion}
         />
       </Layout>
     );

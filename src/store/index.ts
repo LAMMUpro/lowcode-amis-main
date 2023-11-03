@@ -3,14 +3,13 @@ import {PageNodeStore} from './PageNode';
 import {reaction} from 'mobx';
 import { findManyPageNode } from '@/api/PageNode';
 import { findAllApplication } from '@/api/Application';
+import noPageSchema from '@/schema/noPage.json';
 
 export const MainStore = types
   .model('MainStore', {
     /** 未知用途？？？ */
     offScreen: false,
 
-    /** 应用 */
-    // appList: types.optional(types.array(types.frozen()), []),
     /** 菜单节点树 */ 
     pageNodes: types.optional(types.array(PageNodeStore), []),
     /** 菜单叶节点id */
@@ -25,6 +24,8 @@ export const MainStore = types
     isMobile: false,
     /** 当前应用id */
     currentApplicationId: 0,
+    /** 当前应用版本 */
+    currentApplicationVersion: '',
     /** 当前应用名称 */
     currentApplicationName: '',
     /** 当前选中的菜单叶节点id */
@@ -66,8 +67,8 @@ export const MainStore = types
     /** 更新菜单节点 */
     const updatePageNodes = flow (function *() {
       const res = yield findManyPageNode({
-        applicationId: 1,
-        version: '1.0.0'
+        applicationId: self.currentApplicationId,
+        version: self.currentApplicationVersion,
       });
       if (res.code == 1 && res.data?.[0]) {
         self.pageNodes = res.data;
@@ -75,13 +76,11 @@ export const MainStore = types
       }
     })
 
-    /** 更新应用列表 */
-    // const updateAppList = flow (function *() {
-    //   const res = yield findAllApplication();
-    //   if (res.code == 1 && res.data) {
-    //     self.appList = res.data;
-    //   }
-    // })
+    /** 清除应用菜单及叶节点数据 */
+    function clearPageNodes() {
+      self.pageNodes = [] as any;
+      self.leafIds = [] as any;
+    }
 
     function setPreview(value: boolean) {
       self.isPreview = value;
@@ -93,6 +92,11 @@ export const MainStore = types
 
     function updateCurrentNodeId(value: number) {
       self.currentNodeId = value;
+    }
+
+    /** 无页面提示 */
+    function setSchemaNopage() {
+      self.currentSchema = noPageSchema;
     }
 
     function updateCurrentSchema(value: number) {
@@ -107,6 +111,10 @@ export const MainStore = types
       self.currentApplicationId = value;
     }
 
+    function updateApplicationVersion(value: string) {
+      self.currentApplicationVersion = value;
+    }
+
     function updateApplicationName(value: string) {
       self.currentApplicationName = value;
     }
@@ -117,13 +125,15 @@ export const MainStore = types
       updateCurrentSchema,
       updateSchemaLoading,
       updateApplicationId,
+      updateApplicationVersion,
       updateApplicationName,
       toggleOffScreen,
       toggleAddPageDialogShow,
       setPreview,
+      setSchemaNopage,
       setIsMobile,
       updatePageNodes,
-      // updateAppList,
+      clearPageNodes,
       afterCreate() {
         if (typeof window !== 'undefined' && window.localStorage) {
           const storeData = window.localStorage.getItem('store');

@@ -54,3 +54,17 @@ export function openLink(link: string, target:'_blank'|'_self'|'_parent'|'_top' 
   label.click();
   document.body.removeChild(label);
 }
+
+/**
+ * 从树中寻找节点
+ */
+export function findNode(treeList: any, fn: (node: any)=>boolean): any {
+  for (let index = 0; index < treeList.length; index++) {
+    const node = treeList[index];
+    if (fn(node)) return node;
+    if (node.children?.length) {
+      const result = findNode(node.children, fn);
+      if (result) return result;
+    }
+  }
+}

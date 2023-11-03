@@ -4,6 +4,11 @@
     {
       "type": "container",
       "id": "u:15728aef7af5",
+      "themeCss": {
+        "baseControlClassName": {
+          "boxShadow:default": " 0px 0px 0px 0px transparent"
+        }
+      },
       "body": [
         {
           "type": "container",
@@ -612,7 +617,7 @@
                             "actions": [
                               {
                                 "ignoreError": false,
-                                "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\nstore.updateApplicationId(context.props.data.id);\nstore.updateApplicationName(context.props.data.name);\n",
+                                "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\nstore.updateApplicationId(context.props.data.id);\nstore.updateApplicationName(context.props.data.name);\nstore.updateApplicationVersion(context.props.data.currentEditVersion);\nstore.setSchemaNopage();\nstore.clearPageNodes([]);\n",
                                 "actionType": "custom"
                               },
                               {
@@ -745,12 +750,7 @@
       "size": "none",
       "wrapperBody": false,
       "isFixedHeight": false,
-      "isFixedWidth": false,
-      "themeCss": {
-        "baseControlClassName": {
-          "boxShadow:default": " 0px 0px 0px 0px transparent"
-        }
-      }
+      "isFixedWidth": false
     },
     {
       "type": "button",
@@ -779,23 +779,23 @@
       "level": "primary"
     }
   ],
-  "id": "u:829e4d1109e7",
-  "themeCss": {
-    "toolbarControlClassName": {
-      "boxShadow:default": " 0px 0px 0px 0px transparent"
-    },
-    "baseControlClassName": {
-      "boxShadow:default": " 0px 0px 0px 0px transparent"
-    },
-    "bodyControlClassName": {
-      "boxShadow:default": " 0px 0px 0px 0px transparent"
-    }
-  },
   "regions": [
     "body"
   ],
   "pullRefresh": {
     "disabled": true
+  },
+  "id": "u:829e4d1109e7",
+  "themeCss": {
+    "baseControlClassName": {
+      "boxShadow:default": " 0px 0px 0px 0px transparent"
+    },
+    "bodyControlClassName": {
+      "boxShadow:default": " 0px 0px 0px 0px transparent"
+    },
+    "toolbarControlClassName": {
+      "boxShadow:default": " 0px 0px 0px 0px transparent"
+    }
   },
   "definitions": {
     "dialog-ref-1": {

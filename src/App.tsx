@@ -15,6 +15,7 @@ import resetPswSchema from "@/schema/resetPsw.json";
 import indexSchema from "@/schema/index.json";
 import homeSchema from "@/schema/home.json";
 import Page404 from '@/pages/404';
+import PreviewRoute from '@/pages/components/PreviewRoute';
 const Preview = React.lazy(() => import('@/pages/preview'));
 const Editor = React.lazy(() => import('@/pages/editor'));
 
@@ -67,19 +68,6 @@ export default function (): JSX.Element {
     }
   ));
 
-  // store.updateAppList();
-
-  /** 获取菜单节点信息 */
-  store.updatePageNodes().then(()=>{
-    // TODO
-    /** 回显当前页面 */
-    if (store.currentNodeId && store.leafIds.includes(store.currentNodeId)) {
-
-    } else { /** 显示第一个叶节点 */
-
-    }
-  });
-
   return (
     <Provider store={store}>
       <RootRoute store={store} />
@@ -97,18 +85,23 @@ const RootRoute = observer(function ({store}: {store: StoreType}) {
           fallback={<Spinner overlay className="m-t-lg" size="lg" />}
         >
           <Switch>
+            {/* 登录/注册/重置 */}
             <Route path="/login" exact component={() => <SchemaRender schema={loginSchema}/>} />
             <Route path="/register" exact component={() => <SchemaRender schema={registerSchema}/>} />
             <Route path="/resetPsw" exact component={() => <SchemaRender schema={resetPswSchema}/>} />
 
+            {/* 应用列表 */}
             <Route path="/home" exact component={() => <SchemaRender schema={homeSchema}/>} />
 
+            {/* 预览/编辑 */}
             <Route path="/preview" exact component={Preview} />
-            <Route path="/preview/:id" component={Preview} />
+            <PreviewRoute path="/preview/:id" component={Preview}></PreviewRoute>
             <Route path="/editor/:path" component={Editor} />
 
+            {/* 首页 */}
             <Route path="/" exact component={() => <SchemaRender schema={indexSchema}/>} />
 
+            {/* 路径不存在 */}
             <Route component={Page404} />
           </Switch>
         </React.Suspense>
