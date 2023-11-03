@@ -1,0 +1,17 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "tpl",
+      "tpl": "暂无页面，请先新建。",
+      "wrapperComponent": "",
+      "inline": false
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "pullRefresh": {
+    "disabled": true
+  }
+}
