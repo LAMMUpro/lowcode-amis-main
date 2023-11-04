@@ -204,12 +204,12 @@ export function schema2component(
           alert: store.alert,
           copy: store.copy,
           propsTransform: transform,
-          theme: store.theme
+          theme: store.theme,
         },
         { 
           ...this.getEnv(),
           /** 自带的有问题, 自己实现一个 */
-          fetcher: amisRequest
+          fetcher: amisRequest,
         }
       );
 
@@ -220,5 +220,7 @@ export function schema2component(
   return withRouter(SchemaRenderer);
 }
 
+const SchemaRenderer = schema2component({type: 'page', body: 'It works'});
+
 /** 默认导出<SchemaRenderer> */
-export default schema2component({type: 'page', body: 'It works'});
+export default SchemaRenderer;
