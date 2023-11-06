@@ -18,6 +18,8 @@ export const MainStore = types
     theme: 'cxd',
     /** 新增页面弹窗是否显示 */
     isShowAddPageDialog: false,
+    /** 版本管理弹窗是否显示 */
+    isShowEnvDialog: false,
     /** 编辑器中页面是否为预览态 */
     isPreview: false,
     /** 是否移动端 */
@@ -36,6 +38,9 @@ export const MainStore = types
     isSchemaLoading: false,
     /** 有可以保存的schema */
     haveNotSave: false,
+
+    /** 当前正在编辑的app的Id */
+    currentEditAppId: 0,
   })
   .views(self => ({
     get fetcher() {
@@ -62,6 +67,10 @@ export const MainStore = types
 
     function toggleAddPageDialogShow(isShow: boolean) {
       self.isShowAddPageDialog = isShow;
+    }
+
+    function toggleEnvDialogShow(isShow: boolean) {
+      self.isShowEnvDialog = isShow;
     }
 
     /** 更新菜单节点 */
@@ -119,6 +128,10 @@ export const MainStore = types
       self.currentApplicationName = value;
     }
 
+    function updateCurrentEditAppId(value: number) {
+      self.currentEditAppId = value;
+    }
+
     return {
       updateHaveNotSave,
       updateCurrentNodeId,
@@ -129,11 +142,13 @@ export const MainStore = types
       updateApplicationName,
       toggleOffScreen,
       toggleAddPageDialogShow,
+      toggleEnvDialogShow,
       setPreview,
       setSchemaNopage,
       setIsMobile,
       updatePageNodes,
       clearPageNodes,
+      updateCurrentEditAppId,
       afterCreate() {
         if (typeof window !== 'undefined' && window.localStorage) {
           const storeData = window.localStorage.getItem('store');

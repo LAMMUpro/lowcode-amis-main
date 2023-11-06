@@ -161,7 +161,7 @@
           "body": [
             {
               "type": "cards",
-              "columnsCount": 5,
+              "columnsCount": 3,
               "card": {
                 "type": "container",
                 "body": [
@@ -191,7 +191,7 @@
                           {
                             "type": "tpl",
                             "tpl": "${name} ",
-                            "inline": true,
+                            "inline": false,
                             "wrapperComponent": "",
                             "editorSetting": {
                               "mock": {
@@ -209,13 +209,18 @@
                                 "boxShadow:default": " 0px 0px 0px 0px transparent"
                               }
                             },
-                            "id": "u:ad4277fe5529"
+                            "id": "u:ad4277fe5529",
+                            "maxLine": 1
                           }
                         ],
                         "style": {
                           "position": "static",
-                          "display": "block",
-                          "flex": "0 0 auto"
+                          "display": "flex",
+                          "flex": "1 1 auto",
+                          "flexGrow": 1,
+                          "flexBasis": "auto",
+                          "flexWrap": "nowrap",
+                          "alignItems": "center"
                         },
                         "size": "none",
                         "wrapperBody": false,
@@ -235,13 +240,13 @@
                             "body": [
                               {
                                 "type": "icon",
-                                "icon": "fa fa-edit",
+                                "icon": "fa fa-gear",
                                 "vendor": "",
                                 "id": "u:7897f7f100ff",
                                 "themeCss": {
                                   "className": {
                                     "font": {
-                                      "color": "#4a90e2"
+                                      "color": "#4a4a4a"
                                     },
                                     "padding-and-margin:default": {
                                       "marginRight": "0"
@@ -274,13 +279,69 @@
                                 "actions": [
                                   {
                                     "ignoreError": false,
+                                    "actionType": "custom",
+                                    "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\nstore.toggleEnvDialogShow(true);\nstore.updateCurrentEditAppId(context.props.data.id);"
+                                  }
+                                ]
+                              }
+                            },
+                            "wrapperCustomStyle": {
+                              "root": {
+                                "cursor": "pointer"
+                              }
+                            }
+                          },
+                          {
+                            "type": "container",
+                            "body": [
+                              {
+                                "type": "icon",
+                                "icon": "fa fa-edit",
+                                "vendor": "",
+                                "id": "u:f70fab608208",
+                                "themeCss": {
+                                  "className": {
+                                    "font": {
+                                      "color": "#4a90e2"
+                                    },
+                                    "padding-and-margin:default": {
+                                      "marginRight": "0"
+                                    }
+                                  }
+                                }
+                              }
+                            ],
+                            "style": {
+                              "position": "static",
+                              "display": "block",
+                              "flex": "0 0 auto"
+                            },
+                            "size": "none",
+                            "wrapperBody": false,
+                            "id": "u:047647bceb56",
+                            "isFixedHeight": false,
+                            "isFixedWidth": false,
+                            "themeCss": {
+                              "baseControlClassName": {
+                                "boxShadow:default": " 0px 0px 0px 0px transparent",
+                                "padding-and-margin:default": {
+                                  "marginRight": "10px"
+                                }
+                              }
+                            },
+                            "onEvent": {
+                              "click": {
+                                "weight": 0,
+                                "actions": [
+                                  {
+                                    "ignoreError": false,
                                     "actionType": "dialog",
                                     "dialog": {
                                       "type": "dialog",
                                       "title": "编辑应用信息",
                                       "body": [
                                         {
-                                          "id": "u:1fa0613b6fde",
+                                          "id": "u:3e472aecabf2",
                                           "type": "form",
                                           "title": "表单",
                                           "mode": "horizontal",
@@ -291,7 +352,7 @@
                                               "type": "input-text",
                                               "label": "应用名",
                                               "name": "name",
-                                              "id": "u:5a8808985826",
+                                              "id": "u:46db669514ad",
                                               "required": true,
                                               "value": "${name}"
                                             },
@@ -299,7 +360,7 @@
                                               "type": "input-text",
                                               "label": "应用描述",
                                               "name": "describe",
-                                              "id": "u:919e515edb00",
+                                              "id": "u:7c9ac83124e3",
                                               "value": "${describe}"
                                             }
                                           ],
@@ -313,13 +374,13 @@
                                                   "actions": [
                                                     {
                                                       "actionType": "submit",
-                                                      "componentId": "u:1fa0613b6fde"
+                                                      "componentId": "u:8bdd3683bad3"
                                                     }
                                                   ]
                                                 }
                                               },
                                               "level": "primary",
-                                              "id": "u:62321e838ec7"
+                                              "id": "u:1efc5b901d8f"
                                             }
                                           ],
                                           "resetAfterSubmit": true,
@@ -347,17 +408,17 @@
                                           "type": "button",
                                           "actionType": "cancel",
                                           "label": "取消",
-                                          "id": "u:d750d8363076"
+                                          "id": "u:56df4c444254"
                                         },
                                         {
                                           "type": "button",
                                           "actionType": "confirm",
                                           "label": "确认",
                                           "primary": true,
-                                          "id": "u:fa232c75ca18"
+                                          "id": "u:71a42587f2ef"
                                         }
                                       ],
-                                      "id": "u:88d3fb7c9ac1",
+                                      "id": "u:467afd445099",
                                       "closeOnOutside": false,
                                       "closeOnEsc": false,
                                       "themeCss": {
@@ -520,64 +581,82 @@
                       }
                     ],
                     "style": {
-                      "position": "static",
+                      "position": "relative",
                       "display": "flex",
                       "flexWrap": "nowrap",
                       "alignItems": "center",
-                      "justifyContent": "space-between"
+                      "justifyContent": "space-between",
+                      "inset": "auto"
                     },
-                    "wrapperBody": false,
-                    "isFixedHeight": false,
-                    "isFixedWidth": false,
                     "size": "none",
+                    "wrapperBody": false,
+                    "id": "u:af3bb7392e63",
+                    "isFixedHeight": false,
                     "themeCss": {
                       "baseControlClassName": {
+                        "boxShadow:default": " 0px 0px 0px 0px transparent",
                         "padding-and-margin:default": {
                           "marginBottom": "15px"
-                        },
-                        "boxShadow:default": " 0px 0px 0px 0px transparent"
+                        }
                       }
                     },
-                    "id": "u:af3bb7392e63"
+                    "isFixedWidth": false
                   },
                   {
                     "type": "tpl",
+                    "style": {
+                    },
+                    "id": "u:c2d3c3f334d9",
+                    "themeCss": {
+                      "baseControlClassName": {
+                        "boxShadow:default": " 0px 0px 0px 0px transparent",
+                        "font:default": {
+                          "color": "var(--colors-neutral-text-5)"
+                        }
+                      }
+                    },
                     "tpl": "应用描述：${describe}",
                     "inline": false,
                     "wrapperComponent": "",
-                    "style": {
-                    },
-                    "themeCss": {
-                      "baseControlClassName": {
-                        "font:default": {
-                          "color": "var(--colors-neutral-text-5)"
-                        },
-                        "boxShadow:default": " 0px 0px 0px 0px transparent"
-                      }
-                    },
-                    "id": "u:c2d3c3f334d9",
                     "maxLine": 2
                   },
                   {
                     "type": "container",
+                    "style": {
+                      "position": "static",
+                      "display": "flex",
+                      "flexWrap": "nowrap",
+                      "justifyContent": "space-between",
+                      "alignItems": "center",
+                      "flexDirection": "row"
+                    },
+                    "themeCss": {
+                      "baseControlClassName": {
+                        "boxShadow:default": " 0px 0px 0px 0px transparent",
+                        "padding-and-margin:default": {
+                          "marginTop": "20px"
+                        }
+                      }
+                    },
+                    "id": "u:a97655fa0d6a",
                     "body": [
                       {
                         "type": "tpl",
-                        "tpl": "当前编辑版本：${currentEditVersion}",
-                        "inline": true,
-                        "wrapperComponent": "",
+                        "id": "u:b86652b32839",
                         "style": {
                         },
                         "themeCss": {
                           "baseControlClassName": {
+                            "boxShadow:default": " 0px 0px 0px 0px transparent",
                             "font:default": {
                               "fontSize": "14px",
                               "color": "var(--colors-neutral-text-5)"
-                            },
-                            "boxShadow:default": " 0px 0px 0px 0px transparent"
+                            }
                           }
                         },
-                        "id": "u:b86652b32839"
+                        "tpl": "当前编辑版本：${currentEditVersion}",
+                        "inline": false,
+                        "wrapperComponent": ""
                       },
                       {
                         "type": "container",
@@ -633,25 +712,9 @@
                         }
                       }
                     ],
-                    "style": {
-                      "position": "static",
-                      "display": "flex",
-                      "flexWrap": "nowrap",
-                      "justifyContent": "space-between",
-                      "alignItems": "center"
-                    },
                     "wrapperBody": false,
                     "isFixedHeight": false,
                     "isFixedWidth": false,
-                    "themeCss": {
-                      "baseControlClassName": {
-                        "padding-and-margin:default": {
-                          "marginTop": "20px"
-                        },
-                        "boxShadow:default": " 0px 0px 0px 0px transparent"
-                      }
-                    },
-                    "id": "u:a97655fa0d6a",
                     "size": ""
                   }
                 ],
@@ -706,7 +769,6 @@
                 "id": "u:e2ae9be7e812",
                 "wrapperCustomStyle": {
                   "root": {
-                    "cursor": "pointer",
                     "padding": "10px"
                   }
                 }

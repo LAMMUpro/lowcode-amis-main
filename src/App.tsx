@@ -13,12 +13,11 @@ import loginSchema from "@/schema/login.json";
 import registerSchema from "@/schema/register.json";
 import resetPswSchema from "@/schema/resetPsw.json";
 import indexSchema from "@/schema/index.json";
-import homeSchema from "@/schema/home.json";
 import Page404 from '@/pages/404';
 import PreviewRoute from '@/pages/components/PreviewRoute';
 const Preview = React.lazy(() => import('@/pages/preview'));
 const Editor = React.lazy(() => import('@/pages/editor'));
-
+const Home = React.lazy(() => import('@/pages/home'));
 
 export default function (): JSX.Element {
   const store = ((window as any).store = MainStore.create(
@@ -91,7 +90,7 @@ const RootRoute = observer(function ({store}: {store: StoreType}) {
             <Route path="/resetPsw" exact component={() => <SchemaRender schema={resetPswSchema}/>} />
 
             {/* 应用列表 */}
-            <Route path="/home" exact component={() => <SchemaRender schema={homeSchema}/>} />
+            <Route path="/home" exact component={Home} />
 
             {/* 预览/编辑 */}
             <Route path="/preview" exact component={Preview} />
