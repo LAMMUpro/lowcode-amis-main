@@ -8,6 +8,10 @@ yarn-error.log*
 dist
 .s
 
+# 软链接
+src/types/dto
+src/types/node_modules
+
 # Runtime data
 pids
 *.pid
