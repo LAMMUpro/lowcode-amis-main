@@ -641,22 +641,305 @@
                     "id": "u:a97655fa0d6a",
                     "body": [
                       {
-                        "type": "tpl",
-                        "id": "u:b86652b32839",
+                        "type": "container",
+                        "id": "u:42d8c43040da",
                         "style": {
+                          "position": "static",
+                          "display": "flex",
+                          "flex": "0 0 auto",
+                          "flexWrap": "nowrap",
+                          "alignItems": "center"
                         },
                         "themeCss": {
                           "baseControlClassName": {
-                            "boxShadow:default": " 0px 0px 0px 0px transparent",
-                            "font:default": {
-                              "fontSize": "14px",
-                              "color": "var(--colors-neutral-text-5)"
-                            }
+                            "boxShadow:default": " 0px 0px 0px 0px transparent"
                           }
                         },
-                        "tpl": "当前编辑版本：${currentEditVersion}",
-                        "inline": false,
-                        "wrapperComponent": ""
+                        "body": [
+                          {
+                            "type": "tpl",
+                            "tpl": "当前编辑版本：${currentEditVersion}",
+                            "inline": false,
+                            "wrapperComponent": "",
+                            "style": {
+                            },
+                            "themeCss": {
+                              "baseControlClassName": {
+                                "font:default": {
+                                  "fontSize": "14px",
+                                  "color": "var(--colors-neutral-text-5)"
+                                },
+                                "boxShadow:default": " 0px 0px 0px 0px transparent"
+                              }
+                            },
+                            "id": "u:9c95413ca1d9"
+                          },
+                          {
+                            "type": "button",
+                            "label": "切换",
+                            "onEvent": {
+                              "click": {
+                                "actions": [
+                                  {
+                                    "ignoreError": false,
+                                    "actionType": "dialog",
+                                    "dialog": {
+                                      "type": "dialog",
+                                      "title": "应用版本管理",
+                                      "body": [
+                                        {
+                                          "type": "form",
+                                          "id": "u:41eeeda2bd98",
+                                          "title": "表单",
+                                          "mode": "horizontal",
+                                          "dsType": "api",
+                                          "feat": "Insert",
+                                          "body": [
+                                            {
+                                              "type": "input-group",
+                                              "name": "input-group",
+                                              "label": "应用版本:",
+                                              "body": [
+                                                {
+                                                  "type": "select",
+                                                  "label": "应用版本",
+                                                  "name": "versionId",
+                                                  "id": "u:ee05895bb14b",
+                                                  "multiple": false,
+                                                  "placeholder": "请选择应用版本",
+                                                  "source": {
+                                                    "method": "get",
+                                                    "url": "/api/app-version?applicationId=${store.currentEditAppId}",
+                                                    "requestAdaptor": "",
+                                                    "adaptor": "",
+                                                    "messages": {
+                                                    },
+                                                    "responseData": {
+                                                      "options": "${items}"
+                                                    }
+                                                  },
+                                                  "labelField": "version",
+                                                  "valueField": "id",
+                                                  "className": ""
+                                                },
+                                                {
+                                                  "type": "button",
+                                                  "label": "新增",
+                                                  "level": "primary",
+                                                  "id": "u:ff638b832805",
+                                                  "size": "md",
+                                                  "onEvent": {
+                                                    "click": {
+                                                      "weight": 0,
+                                                      "actions": [
+                                                        {
+                                                          "ignoreError": false,
+                                                          "actionType": "dialog",
+                                                          "dialog": {
+                                                            "type": "dialog",
+                                                            "title": "新增应用版本",
+                                                            "body": [
+                                                              {
+                                                                "type": "input-text",
+                                                                "label": "版本号:",
+                                                                "name": "version",
+                                                                "id": "u:06f61b446925",
+                                                                "mode": "horizontal",
+                                                                "required": true
+                                                              },
+                                                              {
+                                                                "type": "select",
+                                                                "label": "基于版本:",
+                                                                "name": "versionId",
+                                                                "id": "u:5d8a4afabcd8",
+                                                                "multiple": false,
+                                                                "placeholder": "请选择应用版本",
+                                                                "source": {
+                                                                  "method": "get",
+                                                                  "url": "/api/app-version?applicationId=${store.currentEditAppId}",
+                                                                  "requestAdaptor": "",
+                                                                  "adaptor": "",
+                                                                  "messages": {
+                                                                  },
+                                                                  "responseData": {
+                                                                    "options": "${items}"
+                                                                  }
+                                                                },
+                                                                "labelField": "version",
+                                                                "valueField": "id",
+                                                                "className": "",
+                                                                "mode": "horizontal",
+                                                                "required": true
+                                                              }
+                                                            ],
+                                                            "showCloseButton": true,
+                                                            "showErrorMsg": true,
+                                                            "showLoading": true,
+                                                            "className": "app-popover",
+                                                            "actions": [
+                                                              {
+                                                                "type": "button",
+                                                                "actionType": "cancel",
+                                                                "label": "取消",
+                                                                "id": "u:3d3a4ef5f530"
+                                                              },
+                                                              {
+                                                                "type": "button",
+                                                                "actionType": "confirm",
+                                                                "label": "确认",
+                                                                "primary": true,
+                                                                "id": "u:cd89e40f8007"
+                                                              }
+                                                            ],
+                                                            "id": "u:5b344424ba90",
+                                                            "closeOnOutside": false,
+                                                            "closeOnEsc": false,
+                                                            "themeCss": {
+                                                              "dialogClassName": {
+                                                                "box-shadow": " 0px 0px 0px 0px transparent"
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      ]
+                                                    }
+                                                  }
+                                                },
+                                                {
+                                                  "type": "button",
+                                                  "label": "提交审核",
+                                                  "onEvent": {
+                                                    "click": {
+                                                      "actions": [
+                                                      ]
+                                                    }
+                                                  },
+                                                  "id": "u:817c128c8d70",
+                                                  "level": "success",
+                                                  "disabledOn": "${!versionId}"
+                                                },
+                                                {
+                                                  "type": "button",
+                                                  "label": "删除",
+                                                  "onEvent": {
+                                                    "click": {
+                                                      "actions": [
+                                                        {
+                                                          "ignoreError": false,
+                                                          "actionType": "custom",
+                                                          "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\nconsole.log(context);\ndoAction({\n  actionType: 'ajax',\n  args: {\n    api: `/api/versions/${context.props.data.versionId}`,\n    method: 'delete'\n  }\n});\n"
+                                                        }
+                                                      ]
+                                                    }
+                                                  },
+                                                  "id": "u:aa7c4b2d5b57",
+                                                  "level": "danger",
+                                                  "confirmText": "您确定要删除该应用版本吗?对应节点/页面也将被删除!",
+                                                  "disabledOn": "${!versionId}"
+                                                }
+                                              ],
+                                              "id": "u:e4c987a6eee1",
+                                              "inline": false,
+                                              "mode": "horizontal",
+                                              "className": "",
+                                              "inputClassName": "",
+                                              "staticClassName": ""
+                                            }
+                                          ],
+                                          "actions": [
+                                            {
+                                              "type": "button",
+                                              "label": "提交",
+                                              "onEvent": {
+                                                "click": {
+                                                  "actions": [
+                                                    {
+                                                      "actionType": "submit",
+                                                      "componentId": "u:41eeeda2bd98"
+                                                    }
+                                                  ]
+                                                }
+                                              },
+                                              "level": "primary",
+                                              "id": "u:c14dfd77fb29"
+                                            }
+                                          ],
+                                          "resetAfterSubmit": true,
+                                          "api": {
+                                            "url": "",
+                                            "method": "get"
+                                          }
+                                        }
+                                      ],
+                                      "showCloseButton": true,
+                                      "showErrorMsg": true,
+                                      "showLoading": true,
+                                      "className": "app-popover",
+                                      "actions": [
+                                        {
+                                          "type": "button",
+                                          "actionType": "cancel",
+                                          "label": "取消",
+                                          "id": "u:e1c39d79c761",
+                                          "onEvent": {
+                                            "click": {
+                                              "weight": 0,
+                                              "actions": [
+                                                {
+                                                  "ignoreError": false,
+                                                  "actionType": "closeDialog"
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "type": "button",
+                                          "actionType": "confirm",
+                                          "label": "确认",
+                                          "primary": true,
+                                          "id": "u:810060dd97e8"
+                                        }
+                                      ],
+                                      "id": "u:d713cad18a57",
+                                      "closeOnOutside": false,
+                                      "closeOnEsc": false,
+                                      "themeCss": {
+                                        "dialogClassName": {
+                                          "box-shadow": " 0px 0px 0px 0px transparent"
+                                        }
+                                      },
+                                      "onEvent": {
+                                        "cancel": {
+                                          "weight": 0,
+                                          "actions": [
+                                            {
+                                              "ignoreError": false,
+                                              "actionType": "closeDialog"
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            "id": "u:cba95e0c6be3",
+                            "level": "enhance",
+                            "size": "xs",
+                            "themeCss": {
+                              "className": {
+                                "padding-and-margin:default": {
+                                  "marginLeft": "20px"
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "size": "none",
+                        "wrapperBody": false,
+                        "isFixedHeight": false
                       },
                       {
                         "type": "container",
@@ -709,13 +992,20 @@
                               }
                             ]
                           }
+                        },
+                        "wrapperCustomStyle": {
+                          "root": {
+                            "cursor": "pointer"
+                          }
                         }
                       }
                     ],
                     "wrapperBody": false,
                     "isFixedHeight": false,
                     "isFixedWidth": false,
-                    "size": ""
+                    "size": "",
+                    "wrapperCustomStyle": {
+                    }
                   }
                 ],
                 "size": "none",

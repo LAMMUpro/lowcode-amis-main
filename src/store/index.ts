@@ -18,7 +18,7 @@ export const MainStore = types
     theme: 'cxd',
     /** 新增页面弹窗是否显示 */
     isShowAddPageDialog: false,
-    /** 版本管理弹窗是否显示 */
+    /** 环境管理弹窗是否显示 */
     isShowEnvDialog: false,
     /** 编辑器中页面是否为预览态 */
     isPreview: false,
