@@ -738,40 +738,6 @@
                                                           "dialog": {
                                                             "type": "dialog",
                                                             "title": "新增应用版本",
-                                                            "body": [
-                                                              {
-                                                                "type": "input-text",
-                                                                "label": "版本号:",
-                                                                "name": "version",
-                                                                "id": "u:06f61b446925",
-                                                                "mode": "horizontal",
-                                                                "required": true
-                                                              },
-                                                              {
-                                                                "type": "select",
-                                                                "label": "基于版本:",
-                                                                "name": "versionId",
-                                                                "id": "u:5d8a4afabcd8",
-                                                                "multiple": false,
-                                                                "placeholder": "请选择应用版本",
-                                                                "source": {
-                                                                  "method": "get",
-                                                                  "url": "/api/app-version?applicationId=${store.currentEditAppId}",
-                                                                  "requestAdaptor": "",
-                                                                  "adaptor": "",
-                                                                  "messages": {
-                                                                  },
-                                                                  "responseData": {
-                                                                    "options": "${items}"
-                                                                  }
-                                                                },
-                                                                "labelField": "version",
-                                                                "valueField": "id",
-                                                                "className": "",
-                                                                "mode": "horizontal",
-                                                                "required": true
-                                                              }
-                                                            ],
                                                             "showCloseButton": true,
                                                             "showErrorMsg": true,
                                                             "showLoading": true,
@@ -798,8 +764,92 @@
                                                               "dialogClassName": {
                                                                 "box-shadow": " 0px 0px 0px 0px transparent"
                                                               }
+                                                            },
+                                                            "body": [
+                                                              {
+                                                                "id": "u:9d2719cee685",
+                                                                "type": "form",
+                                                                "title": "表单",
+                                                                "mode": "horizontal",
+                                                                "dsType": "api",
+                                                                "feat": "Insert",
+                                                                "body": [
+                                                                  {
+                                                                    "name": "version",
+                                                                    "label": "版本号:",
+                                                                    "type": "input-text",
+                                                                    "id": "u:85c123926cc5",
+                                                                    "required": true
+                                                                  },
+                                                                  {
+                                                                    "name": "extendVersionId",
+                                                                    "label": "基于版本:",
+                                                                    "type": "select",
+                                                                    "id": "u:6b50b67fda35",
+                                                                    "multiple": false,
+                                                                    "required": true,
+                                                                    "source": {
+                                                                      "url": "/api/app-version?applicationId=${store.currentEditAppId}",
+                                                                      "method": "get"
+                                                                    },
+                                                                    "labelField": "version",
+                                                                    "valueField": "id"
+                                                                  }
+                                                                ],
+                                                                "api": {
+                                                                  "url": "/api/app-version",
+                                                                  "method": "post",
+                                                                  "requestAdaptor": "",
+                                                                  "adaptor": "",
+                                                                  "messages": {
+                                                                  },
+                                                                  "data": {
+                                                                    "&": "$$",
+                                                                    "applicationId": "${store.currentApplicationId}"
+                                                                  }
+                                                                },
+                                                                "actions": [
+                                                                  {
+                                                                    "type": "button",
+                                                                    "label": "提交",
+                                                                    "onEvent": {
+                                                                      "click": {
+                                                                        "actions": [
+                                                                          {
+                                                                            "actionType": "submit",
+                                                                            "componentId": "u:9d2719cee685"
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    },
+                                                                    "level": "primary",
+                                                                    "id": "u:af7ba7e9879a"
+                                                                  }
+                                                                ],
+                                                                "resetAfterSubmit": true,
+                                                                "onEvent": {
+                                                                  "submitSucc": {
+                                                                    "weight": 0,
+                                                                    "actions": [
+                                                                      {
+                                                                        "componentId": "u:ee05895bb14b",
+                                                                        "ignoreError": false,
+                                                                        "actionType": "reload"
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                }
+                                                              }
+                                                            ],
+                                                            "onEvent": {
+                                                              "confirm": {
+                                                                "weight": 0,
+                                                                "actions": [
+                                                                ]
+                                                              }
                                                             }
-                                                          }
+                                                          },
+                                                          "reload": "form11.versionId"
                                                         }
                                                       ]
                                                     }
@@ -868,6 +918,14 @@
                                           "api": {
                                             "url": "",
                                             "method": "get"
+                                          },
+                                          "name": "form11",
+                                          "onEvent": {
+                                            "submitSucc": {
+                                              "weight": 0,
+                                              "actions": [
+                                              ]
+                                            }
                                           }
                                         }
                                       ],
