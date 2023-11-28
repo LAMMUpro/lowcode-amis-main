@@ -135,6 +135,10 @@ export default inject('store')(
               copy: store.copy,
               /** 显示调试工具 */
               enableAMISDebug: ['localhost', 'test'].includes(env),
+              /** 页面交互行为追踪（调试） */
+              tracker: ['localhost', 'test'].includes(env) ? (eventTrack, props) => {
+                console.log('>>>', eventTrack, props);
+              } : () => void 0,
             }}
             data={{
               /** //TODO context是这样注入吗？ */

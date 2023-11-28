@@ -213,6 +213,10 @@ export function schema2component(
           fetcher: amisRequest,
           /** 显示调试工具 */
           enableAMISDebug: ['localhost', 'test'].includes(env),
+          /** 页面交互行为追踪（调试） */
+          tracker: ['localhost', 'test'].includes(env) ? (eventTrack, props) => {
+            console.log('>>>', eventTrack, props);
+          } : () => void 0,
         }
       );
 
