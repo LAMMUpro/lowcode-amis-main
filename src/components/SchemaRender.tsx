@@ -10,6 +10,7 @@ import qs from 'qs';
 import {render as amisRender, utils, filter} from 'amis';
 import { amisRequest } from '@/utils';
 import { injectContext, injectData } from '@/utils/inject';
+import { env } from '@/utils';
 
 export function schema2component(
   schema: any,
@@ -210,6 +211,8 @@ export function schema2component(
           ...this.getEnv(),
           /** 自带的有问题, 自己实现一个 */
           fetcher: amisRequest,
+          /** 显示调试工具 */
+          enableAMISDebug: ['localhost', 'test'].includes(env),
         }
       );
 

@@ -8,6 +8,7 @@ import {StoreType} from '@/store';
 import {Icon} from '@/icons/index';
 import { updatePageSchemaById } from '@/api/PageSchema';
 import { injectContext, injectData } from '@/utils/inject';
+import { env } from '@/utils';
 
 const editorLanguages = [
   {
@@ -132,6 +133,8 @@ export default inject('store')(
               notify: store.notify,
               alert: store.alert,
               copy: store.copy,
+              /** 显示调试工具 */
+              enableAMISDebug: ['localhost', 'test'].includes(env),
             }}
             data={{
               /** //TODO context是这样注入吗？ */
