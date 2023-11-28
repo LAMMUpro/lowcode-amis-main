@@ -11,6 +11,8 @@ import 'amis-editor-core/lib/style.css';
 import '@/scss/style.scss';
 /** 修改组件默认样式 */
 import '@/scss/fix-amis.scss';
+/** 加载自定义组件 */
+import './custom-components';
 
 setDefaultTheme('cxd');
 
