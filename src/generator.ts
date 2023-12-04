@@ -248,7 +248,7 @@ export const populateModelFile = (
 export const generateBarrelFile = (models: DMMF.Model[], indexFile: SourceFile) => {
 	models.forEach((model) =>
 		indexFile.addExportDeclaration({
-			moduleSpecifier: `./${model.name.toLowerCase()}`,
+			moduleSpecifier: `./${model.name}`,
 		})
 	)
 }
