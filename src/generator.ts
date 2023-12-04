@@ -132,10 +132,16 @@ export const generateSchemaForModel = (
 ) => {
 	const { modelName } = useModelNames(config)
 
+	/** zod对象注释 */
+	sourceFile.addStatements((writer) => {
+		writer.newLine();
+		writer.write(`/** ${model.documentation} */`);
+	})
+
 	sourceFile.addVariableStatement({
 		declarationKind: VariableDeclarationKind.Const,
 		isExported: true,
-		leadingTrivia: (writer) => writer.blankLineIfLastNot(),
+		// leadingTrivia: (writer) => writer.blankLineIfLastNot(),
 		declarations: [
 			{
 				name: modelName(model.name),
