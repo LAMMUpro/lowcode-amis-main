@@ -55,7 +55,7 @@ generatorHandler({
 
 		models.forEach((model) => {
 			const sourceFile = project.createSourceFile(
-				`${outputPath}/${model.name.toLowerCase()}.ts`,
+				`${outputPath}/${model.name}.ts`,
 				{},
 				{ overwrite: true }
 			)
