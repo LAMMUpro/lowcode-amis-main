@@ -8,9 +8,13 @@ export const getJSDocs = (docString?: string) => {
 		const docLines = docString.split('\n').filter((dL) => !dL.trimStart().startsWith('@zod'))
 
 		if (docLines.length) {
-			lines.push('/**')
-			docLines.forEach((dL) => lines.push(` * ${dL}`))
-			lines.push(' */')
+      if (docLines.length==1) { /** 单行注释 */
+        docLines.forEach((dL) => lines.push(`/** ${dL} */`));
+      } else { /** 多行注释 */
+				lines.push('/**')
+				docLines.forEach((dL) => lines.push(` * ${dL}`))
+				lines.push(' */')
+      }
 		}
 	}
 
