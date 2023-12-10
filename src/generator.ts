@@ -166,6 +166,31 @@ export const generateSchemaForModel = (
 	})
 }
 
+/**
+ * 导出模型对应类型
+ * eg: export type AppEnvDto = z.infer<typeof AppEnvZod>
+ */
+function exportInferType(
+	model: DMMF.Model,
+	sourceFile: SourceFile,
+	config: Config,
+	_prismaOptions: PrismaOptions
+) {
+	const { modelName } = useModelNames(config)
+
+	/** 添加注释 */
+	sourceFile.addStatements((writer) =>
+		writeArray(writer, ['', `/** ${model.documentation}类型 */`])
+	)
+
+	/** 导出类型 */
+	sourceFile.addTypeAlias({
+		name: `${model.name}${config.typeSuffix}`,
+		type: `z.infer<typeof ${modelName(model.name)}>`,
+		isExported: true,
+	})
+}
+
 export const generateRelatedSchemaForModel = (
 	model: DMMF.Model,
 	sourceFile: SourceFile,
@@ -241,6 +266,7 @@ export const populateModelFile = (
 	writeImportsForModel(model, sourceFile, config, prismaOptions)
 	writeTypeSpecificSchemas(model, sourceFile, config, prismaOptions)
 	generateSchemaForModel(model, sourceFile, config, prismaOptions)
+	exportInferType(model, sourceFile, config, prismaOptions)
 	if (needsRelatedModel(model, config))
 		generateRelatedSchemaForModel(model, sourceFile, config, prismaOptions)
 }
