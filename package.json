@@ -1,0 +1,9 @@
+{
+  "name": "trpc-template",
+  "version": "1.0.0",
+  "description": "trpc模板",
+  "main": "./src/main.ts",
+  "author": "lammu",
+  "license": "MIT",
+  "private": false
+}
