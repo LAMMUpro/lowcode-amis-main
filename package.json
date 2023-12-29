@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch main.ts"
   },
   "dependencies": {
     "@trpc/server": "^10.45.0",
@@ -19,6 +19,6 @@
     "tsx": "^4.7.0"
   },
   "engines": {
-    "node": ">18"
+    "node": ">18.0.0"
   }
 }

@@ -1,9 +1,8 @@
-import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import { z } from 'zod';
 import { db } from './db';
 import { procedure, router } from './trpc';
 
-const appRouter = router({
+export const appRouter = router({
   /** http://localhost:3000/userList */
   userList: procedure.query(async () => {
     const users = await db.user.findMany();
@@ -24,11 +23,3 @@ const appRouter = router({
 });
 
 export type AppRouter = typeof appRouter;
-
-const server = createHTTPServer({
-  router: appRouter,
-});
-
-server.listen(3000);
-
-console.log('➜  Local:   http://localhost:3000/')
