@@ -3,11 +3,12 @@
 build
 dist
 node_modules
+yarn.lock
+pnpm-lock.yaml
 
 # 隐私配置
 .env
 .env.*
-yarn.lock
 
 # Logs
 logs
