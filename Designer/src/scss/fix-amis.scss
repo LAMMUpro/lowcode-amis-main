@@ -1,0 +1,14 @@
+
+.cxd-Page-body {
+  padding: 0;
+}
+
+/** form头部 */
+.cxd-Panel-title {
+  --Panel-heading-fontSize: 16px;
+}
+
+/** PC - 表单项验证失败，有提示信息，设置下外边距为0 */
+.cxd-Form-item.has-error--isRequired {
+  margin-bottom: 0;
+}

@@ -1,0 +1,17 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "tpl",
+      "tpl": "这是你刚刚新建的页面。",
+      "wrapperComponent": "",
+      "inline": false
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "pullRefresh": {
+    "disabled": true
+  }
+}

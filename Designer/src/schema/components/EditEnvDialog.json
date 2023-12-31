@@ -1,0 +1,229 @@
+{
+  "type": "dialog",
+  "title": "应用环境设置",
+  "body": [
+    {
+      "id": "u:41eeeda2bd98",
+      "type": "form",
+      "title": "表单",
+      "mode": "horizontal",
+      "dsType": "api",
+      "feat": "Insert",
+      "body": [
+        {
+          "type": "input-group",
+          "name": "input-group",
+          "label": "应用版本",
+          "body": [
+            {
+              "type": "select",
+              "label": "应用版本",
+              "name": "versionId",
+              "id": "u:ee05895bb14b",
+              "multiple": false,
+              "placeholder": "请选择应用版本",
+              "source": {
+                "method": "get",
+                "url": "/api/app-version?applicationId=${store.currentEditAppId}",
+                "requestAdaptor": "",
+                "adaptor": "",
+                "messages": {
+                },
+                "responseData": {
+                  "options": "${items}"
+                }
+              },
+              "labelField": "version",
+              "valueField": "id",
+              "className": ""
+            },
+            {
+              "type": "submit",
+              "label": "新增",
+              "level": "primary",
+              "id": "u:ff638b832805",
+              "size": "md",
+              "onEvent": {
+                "click": {
+                  "weight": 0,
+                  "actions": [
+                    {
+                      "ignoreError": false,
+                      "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\nconsole.log(context)\n",
+                      "actionType": "custom"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "button",
+              "label": "提交审核",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                  ]
+                }
+              },
+              "id": "u:817c128c8d70",
+              "level": "success"
+            },
+            {
+              "type": "button",
+              "label": "删除",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "ignoreError": false,
+                      "actionType": "custom",
+                      "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\nconsole.log(context);\ndoAction({\n  actionType: 'ajax',\n  args: {\n    api: `/api/version/${context.props.data.versionId}`,\n    method: 'delete'\n  }\n});\n"
+                    }
+                  ]
+                }
+              },
+              "id": "u:aa7c4b2d5b57",
+              "level": "danger",
+              "confirmText": "您确定要删除该应用版本吗?对应节点/页面也将被删除!"
+            }
+          ],
+          "id": "u:e4c987a6eee1",
+          "inline": false,
+          "mode": "horizontal",
+          "className": "",
+          "inputClassName": "",
+          "staticClassName": ""
+        },
+        {
+          "type": "tpl",
+          "tpl": "请编辑内${versionId}",
+          "inline": true,
+          "wrapperComponent": "",
+          "id": "u:6d33efb7c25f",
+          "themeCss": {
+            "baseControlClassName": {
+              "boxShadow:default": " 0px 0px 0px 0px transparent"
+            }
+          }
+        },
+        {
+          "type": "select",
+          "label": "应用版本",
+          "name": "select",
+          "id": "u:20ddd3008c32",
+          "multiple": false,
+          "mode": "horizontal",
+          "placeholder": "请选择应用版本",
+          "source": {
+            "method": "get",
+            "url": "/api/app-env?applicationId=${store.currentEditAppId}",
+            "requestAdaptor": "",
+            "adaptor": "",
+            "messages": {
+            },
+            "responseData": {
+              "options": "${items}"
+            }
+          },
+          "labelField": "envCh",
+          "valueField": "id"
+        },
+        {
+          "type": "list-select",
+          "label": "绑定环境",
+          "name": "list",
+          "id": "u:73f321895e3b",
+          "multiple": true,
+          "inline": false,
+          "mode": "horizontal",
+          "source": {
+            "url": "/api/app-env?applicationId=${store.currentEditAppId}",
+            "method": "get",
+            "requestAdaptor": "",
+            "adaptor": "",
+            "messages": {
+            },
+            "responseData": {
+              "options": "${items}"
+            }
+          },
+          "labelField": "envCh",
+          "valueField": "id",
+          "disabled": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "button",
+          "label": "提交",
+          "onEvent": {
+            "click": {
+              "actions": [
+                {
+                  "actionType": "submit",
+                  "componentId": "u:41eeeda2bd98"
+                }
+              ]
+            }
+          },
+          "level": "primary",
+          "id": "u:c14dfd77fb29"
+        }
+      ],
+      "resetAfterSubmit": true,
+      "api": {
+        "url": "",
+        "method": "get"
+      }
+    }
+  ],
+  "showCloseButton": true,
+  "showErrorMsg": true,
+  "showLoading": true,
+  "className": "app-popover",
+  "actions": [
+    {
+      "type": "button",
+      "actionType": "cancel",
+      "label": "取消",
+      "id": "u:e1c39d79c761",
+      "onEvent": {
+        "click": {
+          "weight": 0,
+          "actions": [
+            {
+              "ignoreError": false,
+              "actionType": "closeDialog"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "button",
+      "actionType": "confirm",
+      "label": "确认",
+      "primary": true,
+      "id": "u:810060dd97e8"
+    }
+  ],
+  "id": "u:d713cad18a57",
+  "closeOnOutside": false,
+  "closeOnEsc": false,
+  "themeCss": {
+    "dialogClassName": {
+      "box-shadow": " 0px 0px 0px 0px transparent"
+    }
+  },
+  "onEvent": {
+    "cancel": {
+      "weight": 0,
+      "actions": [
+        {
+          "ignoreError": false,
+          "actionType": "closeDialog"
+        }
+      ]
+    }
+  }
+}

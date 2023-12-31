@@ -1,0 +1,77 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "button",
+      "label": "登录",
+      "onEvent": {
+        "click": {
+          "actions": [
+            {
+              "ignoreError": false,
+              "actionType": "url",
+              "args": {
+                "url": "/login",
+                "blank": false
+              }
+            }
+          ]
+        }
+      },
+      "id": "u:d4c49664fd2c"
+    },
+    {
+      "type": "button",
+      "label": "注册",
+      "onEvent": {
+        "click": {
+          "actions": [
+            {
+              "ignoreError": false,
+              "actionType": "url",
+              "args": {
+                "url": "/register",
+                "blank": false
+              }
+            }
+          ]
+        }
+      },
+      "id": "u:367642908706"
+    },
+    {
+      "type": "button",
+      "label": "工作区",
+      "onEvent": {
+        "click": {
+          "actions": [
+            {
+              "ignoreError": false,
+              "actionType": "url",
+              "args": {
+                "url": "/home",
+                "blank": false
+              }
+            }
+          ]
+        }
+      },
+      "id": "u:f6058d1b47ad"
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "pullRefresh": {
+    "disabled": true
+  },
+  "id": "u:b23ffa60aa92",
+  "themeCss": {
+    "baseControlClassName": {
+      "boxShadow:default": " 0px 0px 0px 0px transparent"
+    },
+    "bodyControlClassName": {
+      "boxShadow:default": " 0px 0px 0px 0px transparent"
+    }
+  }
+}

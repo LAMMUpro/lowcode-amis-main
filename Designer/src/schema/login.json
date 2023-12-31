@@ -1,0 +1,120 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "form",
+      "id": "u:0f4d15e1a921",
+      "title": "登录账号",
+      "mode": "horizontal",
+      "dsType": "api",
+      "feat": "Insert",
+      "body": [
+        {
+          "type": "input-text",
+          "label": "手机号",
+          "name": "phone",
+          "id": "u:d1a187301080",
+          "required": true
+        },
+        {
+          "type": "input-password",
+          "label": "密码",
+          "name": "text",
+          "id": "u:d8fd81931f14",
+          "required": true,
+          "showCounter": false,
+          "validations": {
+          },
+          "validationErrors": {
+          }
+        },
+        {
+          "type": "input-text",
+          "label": "验证码",
+          "name": "text",
+          "id": "u:879c9cb5137a",
+          "required": true,
+          "showCounter": false,
+          "validations": {
+          },
+          "validationErrors": {
+          }
+        },
+        {
+          "type": "tpl",
+          "tpl": "没有账号, ",
+          "inline": true,
+          "wrapperComponent": "",
+          "id": "u:423347328019",
+          "themeCss": {
+            "baseControlClassName": {
+              "boxShadow:default": " 0px 0px 0px 0px transparent"
+            }
+          }
+        },
+        {
+          "type": "link",
+          "value": "http://www.baidu.com/",
+          "id": "u:153e7d711a23",
+          "body": "前往注册",
+          "href": "/register",
+          "blank": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "button",
+          "label": "提交",
+          "onEvent": {
+            "click": {
+              "actions": [
+                {
+                  "actionType": "submit",
+                  "componentId": "u:0f4d15e1a921"
+                }
+              ]
+            }
+          },
+          "level": "primary",
+          "id": "u:d42b3d7d1397"
+        }
+      ],
+      "resetAfterSubmit": true,
+      "api": {
+        "url": "http://loaclhosst:9000",
+        "method": "get"
+      },
+      "className": "",
+      "panelClassName": "w-96 m-auto",
+      "wrapWithPanel": true,
+      "headerClassName": ""
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "pullRefresh": {
+    "disabled": true
+  },
+  "id": "u:959f6b872d24",
+  "themeCss": {
+    "baseControlClassName": {
+      "boxShadow:default": " 0px 0px 0px 0px transparent"
+    },
+    "bodyControlClassName": {
+      "boxShadow:default": " 0px 0px 0px 0px transparent"
+    }
+  },
+  "title": "登录页",
+  "wrapperCustomStyle": {
+    "root": {
+      "height": "100%"
+    },
+    ".cxd-Page-body": {
+      "height": "100%",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    }
+  }
+}
