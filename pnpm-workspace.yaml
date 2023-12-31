@@ -1,0 +1,6 @@
+packages:
+  - TRPC
+  - Admin
+  - Designer
+  - packages/*
+  

@@ -24,6 +24,7 @@ src/types/zod
 .env
 .env.*
 yarn.lock
+pnpm-lock.yaml
 
 # Logs
 logs
