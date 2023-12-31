@@ -1,0 +1,58 @@
+# 按目录
+.s
+build
+build_webpack
+dist
+node_modules
+# 自动生成的swagger
+swagger.yaml
+# 自动生成的代码
+prisma/controller 
+# 自动生成的代码
+prisma/api
+# 自动生成的dbml
+prisma/schema.dbml
+# 自动生成的数据库变更记录
+prisma/migrations
+# 自动生成的dto
+src/types/dto
+# 自动生成的dtoExt !!!
+src/types/dtoExt
+# 自动生成的zod
+src/types/zod
+# 隐私配置
+.env
+.env.*
+yarn.lock
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# mac特有
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
