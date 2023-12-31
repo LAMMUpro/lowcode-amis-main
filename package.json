@@ -8,5 +8,8 @@
   },
   "keywords": [],
   "author": "lammu",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.3.0"
+  }
 }
