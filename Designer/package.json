@@ -1,5 +1,5 @@
 {
-  "name": "@lammu/editor",
+  "name": "@lammu/amis-designer",
   "version": "1.1.0",
   "description": "amis 可视化编辑器",
   "main": "",
@@ -43,6 +43,17 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "ts-loader": "*",
+    "html-loader": "*",
+    "babel-loader": "*",
+    "postcss-loader": "*",
+    "vue-style-loader": "*",
+    "@babel/runtime": "*",
+    "@svgr/webpack": "*",
+    "i18n-runtime": "*",
+    "params-replace-loader": "*",
+    "css-loader": "*",
+    "sass-loader": "*",
     "@types/lodash": "^4.14.123",
     "@types/node": "^11.13.8",
     "@types/qs": "^6.5.3",
