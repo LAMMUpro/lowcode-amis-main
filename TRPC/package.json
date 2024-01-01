@@ -1,5 +1,5 @@
 {
-  "name": "trpc-template",
+  "name": "@lammu/amis-trpc",
   "version": "1.0.0",
   "description": "trpc模板",
   "main": "./src/main.ts",
