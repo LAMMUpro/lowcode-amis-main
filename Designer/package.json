@@ -42,7 +42,7 @@
     "react-router-dom": "5.0.1",
     "zod": "^3.22.4",
     "@trpc/client": "^10.45.0",
-    "@lammu/amis-trpc": "*"
+    "@lammu/amis-trpc": "workspace:*"
   },
   "devDependencies": {
     "ts-loader": "*",

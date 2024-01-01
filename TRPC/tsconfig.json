@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "declaration": true,
-    "removeComments": true,
+    "removeComments": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
@@ -11,6 +11,7 @@
     "strict": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "moduleResolution": "Bundler",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,

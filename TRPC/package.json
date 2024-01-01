@@ -2,13 +2,17 @@
   "name": "@lammu/amis-trpc",
   "version": "1.0.0",
   "description": "trpc模板",
-  "main": "./src/main.ts",
   "author": "lammu",
   "license": "MIT",
   "private": false,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "build": "tsc",
-    "dev": "tsx watch main.ts"
+    "dev": "tsx watch ./src/index.ts"
   },
   "dependencies": {
     "@trpc/server": "^10.45.0",
