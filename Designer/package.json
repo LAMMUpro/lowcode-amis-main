@@ -40,7 +40,9 @@
     "react-hook-form": "^7.39.3",
     "react-router": "5.0.1",
     "react-router-dom": "5.0.1",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "@trpc/client": "^10.45.0",
+    "@lammu/amis-trpc": "*"
   },
   "devDependencies": {
     "ts-loader": "*",
