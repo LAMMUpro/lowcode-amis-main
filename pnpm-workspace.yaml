@@ -1,5 +1,5 @@
 packages:
-  - TRPC
+  - Trpc
   - Admin
   - Designer
   - packages/*
