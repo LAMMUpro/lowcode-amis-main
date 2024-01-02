@@ -11,4 +11,4 @@ server.listen(port);
 
 console.log(`➜  Local:   http://localhost:${port}/`)
 
-export { AppRouter } from './routes';
+export type { AppRouter } from './routes';
