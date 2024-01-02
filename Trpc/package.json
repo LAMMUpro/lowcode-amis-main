@@ -11,8 +11,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "build:tsc": "tsc",
-    "build:ncc": "ncc build ./src/index.ts -m -t -o build_ncc",
+    "build": "tsc",
     "dev": "tsx watch ./src/index.ts"
   },
   "dependencies": {
