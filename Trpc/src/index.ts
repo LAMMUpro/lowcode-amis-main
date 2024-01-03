@@ -1,6 +1,6 @@
 import { renderTrpcPanel } from 'trpc-panel';
-import { createHTTPServer } from '@/utils/server';
-import { appRouter } from '@/routes';
+import { createHTTPServer } from './utils/server';
+import { appRouter } from './routes';
 
 const port = 3000;
 const baseUrl = `http://localhost:${port}`;

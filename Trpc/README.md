@@ -1,4 +1,6 @@
-# tRPC模板工程
+# trpc模板工程
+
+> trpc工程下的代码不能使用`src/*`、`@/*`这样的绝对路径，统一使用相对路径
 
 Requires node 18
 pnpm

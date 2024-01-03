@@ -10,7 +10,7 @@
     "sourceMap": false,
     "strict": true,
     "outDir": "./build_tsc",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "moduleResolution": "node",
     "skipLibCheck": true,
     "strictNullChecks": true,
@@ -19,10 +19,7 @@
     "esModuleInterop": true,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@/*": ["src/*"]
-    },
+    "noFallthroughCasesInSwitch": false
   },
   "ts-node": { "esm": true },
   "include": ["src"],
