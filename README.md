@@ -13,3 +13,14 @@ trpc - 后端
 
 ## nest后端
 
+## 打包
+- tsc ✅
+- ncc ❎ (trpc是module, prisma是commonjs不兼容)
+- webpack 待验证
+
+## 部署
+> docker部署
+tsc编译后上传
+
+> serveless部署
+打包用?
