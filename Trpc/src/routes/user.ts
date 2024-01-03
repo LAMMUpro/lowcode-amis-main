@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { db } from '../db';
-import { procedure, router } from '../trpc';
+import { db } from '@/db';
+import { procedure, router } from '@/trpc';
 
 export const userRouter = router({
   /** http://localhost:3000/userList */
