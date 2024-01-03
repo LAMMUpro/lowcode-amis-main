@@ -6,7 +6,16 @@ dist
 node_modules
 yarn.lock
 pnpm-lock.yaml
-
+# 自动生成的代码
+prisma/controller 
+# 自动生成的代码
+prisma/api
+# 自动生成的dbml
+prisma/schema.dbml
+# 自动生成的数据库变更记录
+prisma/migrations
+# 自动生成的zod
+src/types/zod
 # 隐私配置
 .env
 .env.*

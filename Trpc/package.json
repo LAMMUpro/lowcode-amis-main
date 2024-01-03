@@ -15,13 +15,13 @@
     "build:ncc": "ncc build ./src/index.ts -m -t -o build_ncc",
     "dev": "tsx watch ./src/index.ts",
 
-    "studio": "pnpm run prisma studio --port 7777",
-    "formatSchema": "pnpm run prisma format",
-    "migrate": "pnpm run prisma migrate dev",
-    "generate": "pnpm run prisma generate",
-    "watchSchema": "pnpm run prisma generate --watch",
-    "pull": "pnpm run prisma db pull",
-    "push": "pnpm run prisma db push",
+    "studio": "pnpm prisma studio --port 7777",
+    "formatSchema": "pnpm prisma format",
+    "migrate": "pnpm prisma migrate dev",
+    "generate": "pnpm prisma generate",
+    "watchSchema": "pnpm prisma generate --watch",
+    "pull": "pnpm prisma db pull",
+    "push": "pnpm prisma db push",
     "watch": "ts-node scripts/watchPrismaSchema.ts"
   },
   "dependencies": {
@@ -31,6 +31,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "zod-prisma": "workspace:*",
     "@types/node": "^20.10.0",
     "prisma": "^5.2.0",
     "prisma-dbml-generator": "^0.10.0",
