@@ -1,0 +1,99 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id Int [pk, increment]
+  realName String [not null, note: '真实姓名']
+  nickName String [not null, note: '昵称']
+  avatar String [not null, note: '头像url']
+  psw String [not null, note: '密码凭证']
+  phone String [not null, note: '手机号/账号']
+  sex Int [not null, default: 2, note: '性别 0-女, 1-男, 2-未知']
+  roleIds String [not null, default: '', note: '所属角色, 逗号分隔']
+  isEnable Boolean [not null, default: true, note: '是否启用']
+  isDeleted Boolean [not null, default: false, note: '是否被删除']
+
+  Note: '用户'
+}
+
+Table Role {
+  id Int [pk, increment]
+  name String [not null, note: '角色名称']
+  describe String [not null, note: '角色描述']
+  menuIds String [not null, default: '', note: '菜单id, 逗号分隔']
+  isDeleted Boolean [not null, default: false, note: '是否被删除']
+
+  Note: '角色'
+}
+
+Table Application {
+  id Int [pk, increment]
+  name String [unique, not null, note: '应用名 ']
+  describe String [not null, note: '应用描述 ']
+  currentEditVersion String [not null, default: '1.0.0', note: '当前编辑版本 ']
+  isDeleted Boolean [not null, default: false, note: '是否被删除 ']
+
+  Note: '应用'
+}
+
+Table AppVersion {
+  id Int [pk, increment]
+  applicationId Int [not null, note: '对应应用id']
+  version String [not null, default: '1.0.0', note: '版本号']
+  isAuditing Boolean [not null, default: false, note: '是否正在审核中']
+  isPass Boolean [not null, default: false, note: '是否已审核通过，false并不代表未通过，有可能是没提交过']
+  auditContent String [not null, default: '', note: '审核意见，不为空字符串代表未通过']
+  isDeleted Boolean [not null, default: false, note: '是否被删除']
+
+  indexes {
+    (applicationId, version) [unique]
+  }
+
+  Note: '应用版本'
+}
+
+Table AppEnv {
+  id Int [pk, increment]
+  applicationId Int [not null, note: '对应应用id']
+  env String [not null, note: '环境（默认有test/pre/master）']
+  envCh String [not null, note: '环境名']
+  canDelete Boolean [not null, default: true, note: '是否可删除（test/pre/master不可删除）']
+  appVersionId Int [not null, default: 0, note: '版本号id, 为0则为无绑定']
+  version String [not null, default: '1.0.0', note: '版本号']
+  isDeleted Boolean [not null, default: false, note: '是否被删除']
+
+  indexes {
+    (applicationId, env, envCh) [unique]
+  }
+
+  Note: '应用环境'
+}
+
+Table PageNode {
+  id Int [pk, increment]
+  name String [not null, note: '菜单节点英文名, 必须英文']
+  nameCh String [not null, note: '菜单节点中文名']
+  describe String [not null, note: '描述']
+  parentId Int [not null, default: 0, note: '父菜单节点, 为0代表根菜单节点']
+  applicationId Int [not null, note: '对应应用id']
+  version String [not null, note: '版本号xx.xx.xx']
+  icon String [not null, default: '', note: '菜单节点图标']
+  hasSchema Boolean [not null, default: false, note: '菜单节点是否承载页面']
+  isDeleted Boolean [not null, default: false, note: '是否被删除']
+
+  indexes {
+    (name, parentId, applicationId, version) [unique]
+  }
+
+  Note: '菜单节点'
+}
+
+Table PageSchema {
+  id Int [pk, increment]
+  schema String [not null, note: '低代码页面schema']
+  nodeId Int [not null, note: '菜单节点id']
+  isDeleted Boolean [not null, default: false, note: '是否被删除']
+
+  Note: '页面schema'
+}

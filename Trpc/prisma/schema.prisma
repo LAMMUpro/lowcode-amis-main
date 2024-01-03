@@ -1,0 +1,171 @@
+// This is your Prisma schema file, learn more about it in the docs: https://pris.ly/d/prisma-schema
+// 使用///会生成对应的ts注释!!!
+// LongText没法加@default
+
+// 连接数据库配置
+generator client {
+  provider      = "prisma-client-js"
+  // serveless(部署)需要这个engines, 函数计算用的是1.0.x
+  binaryTargets = "debian-openssl-1.1.x" // "debian-openssl-1.0.x" | "debian-openssl-1.1.x"
+  // macbook(本地开发)需要这个engines
+  // binaryTargets = "darwin-arm64"
+  // windows(本地开发)需要这个engines
+  // binaryTargets = "windows"
+}
+
+// 数据库参数
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 预览先要登录 dbdocs login
+// 更新项目命令 dbdocs build prisma/schema.dbml
+// 预览网址 https://dbdocs.io/chen_yongchao/lowcode-nest
+generator dbml {
+  provider   = "prisma-dbml-generator"
+  output     = "./"
+  outputName = "schema.dbml"
+}
+
+// https://github.com/CarterGrimmeisen/zod-prisma
+generator zod {
+  provider                 = "zod-prisma"
+  output                   = "../src/types/zod" // (default) the directory where generated zod schemas will be saved
+  relationModel            = true // (default) Create and export both plain and related models.
+  modelCase                = "PascalCase" // (default) Output models using pascal case (ex. UserModel, PostModel)
+  // modelCase             = "camelCase" // Output models using camel case (ex. userModel, postModel)
+  modelSuffix              = "Zod" // (default) Suffix to apply to your prisma models when naming Zod schemas
+  typeSuffix               = "Dto" // 导出类型的后缀
+  // useDecimalJs          = false // (default) represent the prisma Decimal type using as a JS number
+  useDecimalJs             = true // represent the prisma Decimal type using Decimal.js (as Prisma does)
+  // imports                  = null // (default) will import the referenced file in generated schemas to be used via imports.someExportedVariable
+  // https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-by-null-values
+  prismaJsonNullability    = true // (default) uses prisma's scheme for JSON field nullability
+  // prismaJsonNullability = false // allows null assignment to optional JSON fields
+}
+
+/// 用户
+model User {
+  id        Int     @id @default(autoincrement()) @db.UnsignedInt
+  /// 真实姓名
+  realName  String  @db.VarChar(10)
+  /// 昵称
+  nickName  String  @db.VarChar(20)
+  /// 头像url
+  avatar    String  @db.VarChar(100)
+  /// 密码凭证
+  psw       String  @db.VarChar(30)
+  /// 手机号/账号
+  phone     String  @db.VarChar(11)
+  /// 性别 0-女, 1-男, 2-未知
+  sex       Int     @default(2) @db.TinyInt
+  /// 所属角色, 逗号分隔
+  roleIds   String  @default("") @db.VarChar(200)
+  /// 是否启用
+  isEnable  Boolean @default(true)
+  /// 是否被删除
+  isDeleted Boolean @default(false)
+}
+
+/// 角色
+model Role {
+  id        Int     @id @default(autoincrement()) @db.UnsignedInt
+  /// 角色名称
+  name      String  @db.VarChar(20)
+  /// 角色描述
+  describe  String  @map("_describe") @db.VarChar(100)
+  /// 菜单id, 逗号分隔
+  menuIds   String  @default("") @db.VarChar(500)
+  /// 是否被删除
+  isDeleted Boolean @default(false)
+}
+
+/// 应用
+model Application {
+  id                 Int     @id @default(autoincrement()) @db.UnsignedInt
+  /// 应用名 
+  name               String  @unique @db.VarChar(20)
+  /// 应用描述 
+  describe           String  @map("_describe") @db.VarChar(100)
+  /// 当前编辑版本 
+  currentEditVersion String  @default("1.0.0") @db.VarChar(8)
+  /// 是否被删除 
+  isDeleted          Boolean @default(false)
+}
+
+/// 应用版本
+model AppVersion {
+  id            Int     @id @default(autoincrement()) @db.UnsignedInt
+  /// 对应应用id
+  applicationId Int     @db.UnsignedInt
+  /// 版本号
+  version       String  @default("1.0.0") @db.VarChar(8)
+  /// 是否正在审核中
+  isAuditing    Boolean @default(false)
+  /// 是否已审核通过，false并不代表未通过，有可能是没提交过
+  isPass        Boolean @default(false)
+  /// 审核意见，不为空字符串代表未通过
+  auditContent  String  @default("") @db.VarChar(100)
+  /// 是否被删除
+  isDeleted     Boolean @default(false)
+
+  @@unique([applicationId, version], name: "applicationId_version")
+}
+
+/// 应用环境
+model AppEnv {
+  id            Int     @id @default(autoincrement()) @db.UnsignedInt
+  /// 对应应用id
+  applicationId Int     @db.UnsignedInt
+  /// 环境（默认有test/pre/master）
+  env           String  @db.VarChar(10)
+  /// 环境名
+  envCh         String  @db.VarChar(10)
+  /// 是否可删除（test/pre/master不可删除）
+  canDelete     Boolean @default(true)
+  /// 版本号id, 为0则为无绑定
+  appVersionId  Int     @default(0) @db.UnsignedInt
+  /// 版本号
+  version       String  @default("1.0.0") @db.VarChar(8)
+  /// 是否被删除
+  isDeleted     Boolean @default(false)
+
+  @@unique([applicationId, env, envCh], name: "applicationId_env_envCh")
+}
+
+/// 菜单节点
+model PageNode {
+  id            Int     @id @default(autoincrement()) @db.UnsignedInt
+  /// 菜单节点英文名, 必须英文
+  name          String  @db.VarChar(30)
+  /// 菜单节点中文名
+  nameCh        String  @db.VarChar(15)
+  /// 描述
+  describe      String  @map("_describe") @db.VarChar(100)
+  /// 父菜单节点, 为0代表根菜单节点
+  parentId      Int     @default(0) @db.UnsignedInt
+  /// 对应应用id
+  applicationId Int     @db.UnsignedInt
+  /// 版本号xx.xx.xx
+  version       String  @db.VarChar(8)
+  /// 菜单节点图标
+  icon          String  @default("")
+  /// 菜单节点是否承载页面
+  hasSchema     Boolean @default(false)
+  /// 是否被删除
+  isDeleted     Boolean @default(false)
+
+  @@unique([name, parentId, applicationId, version], name: "name_parentId_applicationId_version")
+}
+
+/// 页面schema
+model PageSchema {
+  id        Int     @id @default(autoincrement()) @db.UnsignedInt
+  /// 低代码页面schema
+  schema    String  @db.LongText
+  /// 菜单节点id
+  nodeId    Int     @db.UnsignedInt
+  /// 是否被删除
+  isDeleted Boolean @default(false)
+}
