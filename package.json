@@ -6,6 +6,9 @@
   "scripts": {
     
   },
+  "devDependencies": {
+    "local-cli": "workspace:*"
+  },
   "keywords": [],
   "author": "lammu",
   "license": "MIT",

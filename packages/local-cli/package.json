@@ -1,0 +1,12 @@
+{
+  "name": "local-cli",
+  "version": "1.0.0",
+  "description": "本地执行脚手架，通过脚手架来设置一些东西",
+  "main": "index.js",
+  "author": "lammu",
+  "private": true,
+  "bin": {
+    "nest-cli": "./index.js"
+  },
+  "license": "MIT"
+}
