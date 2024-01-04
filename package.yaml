@@ -2,9 +2,13 @@ name: lowcode-amis-main
 version: 1.0.0
 description: amis低代码项目
 main: index.js
-scripts: {}
+scripts: 
+  # 初始化配置: 软链接/
+  init:config: local-cli
 keywords: []
 author: lammu
 license: MIT
+dependencies:
+  local-cli: workspace:*
 engines:
   node: '>=18.3.0'
