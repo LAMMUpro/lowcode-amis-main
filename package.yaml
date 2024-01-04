@@ -1,0 +1,10 @@
+name: lowcode-amis-main
+version: 1.0.0
+description: amis低代码项目
+main: index.js
+scripts: {}
+keywords: []
+author: lammu
+license: MIT
+engines:
+  node: '>=18.3.0'
