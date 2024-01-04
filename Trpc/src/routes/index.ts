@@ -1,14 +1,11 @@
 import { router } from "../trpc";
-import { ApplicationRouter, applicationRouter } from './application';
-import { UserRouter, userRouter } from "./user";
+import { applicationRouter } from './application';
+import { userRouter } from "./user";
 
-export const appRouter = router<{
-  /** 用户 */
-  user: UserRouter
-  /** 应用 */
-  application: ApplicationRouter
-}>({
+export const appRouter = router({
+  /** 测试 */
   user: userRouter,
+  /** 应用 */
   application: applicationRouter,
 })
 

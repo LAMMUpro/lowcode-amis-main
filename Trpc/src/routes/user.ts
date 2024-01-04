@@ -36,5 +36,3 @@ export const userRouter = router({
       return user;
     }),
 });
-
-export type UserRouter = typeof userRouter;

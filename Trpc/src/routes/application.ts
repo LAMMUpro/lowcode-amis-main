@@ -19,5 +19,3 @@ export const applicationRouter = router({
       return list;
     }),
 });
-
-export type ApplicationRouter = typeof applicationRouter;
