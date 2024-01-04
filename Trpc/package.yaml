@@ -26,6 +26,7 @@ dependencies:
   trpc-panel: ^1.3.4
   zod: ^3.22.4
 devDependencies:
+  local-cli: workspace:*
   zod-prisma: workspace:*
   '@types/node': ^20.10.0
   prisma: ^5.2.0
