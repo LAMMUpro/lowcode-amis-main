@@ -9,16 +9,27 @@ main: ./src/index.ts
 exports:
   .: ./src/index.ts
 scripts:
+  # tsc编译
   build:tsc: tsc
+  # ncc打包
   build:ncc: ncc build ./src/index.ts -m -t -o build_ncc
+  # 启动项目
   dev: tsx watch ./src/index.ts
+  # web数据库可视化操作
   studio: pnpm prisma studio --port 7777
+  # 格式化prisma.schema
   formatSchema: pnpm prisma format
+  # 数据库结构同步
   migrate: pnpm prisma migrate dev
+  # 更新本地.prisma/client
   generate: pnpm prisma generate
+  # 监控prisma.schema文件变化
   watchSchema: pnpm prisma generate --watch
+  # ???
   pull: pnpm prisma db pull
+  # ???
   push: pnpm prisma db push
+  # 监控prisma.schema文件变化
   watch: ts-node scripts/watchPrismaSchema.ts
 dependencies:
   '@trpc/server': ^10.45.0
