@@ -31,7 +31,9 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "local-cli": "workspace:*",
     "zod-prisma": "workspace:*",
+    "js-yaml": "4.1.0",
     "@types/node": "^20.10.0",
     "prisma": "^5.2.0",
     "prisma-dbml-generator": "^0.10.0",
