@@ -5,6 +5,7 @@ import * as fse from 'fs-extra';
 import { ConfigDto, ConfigZod } from './types';
 
 // process.cwd()
+// TODO 获取命令的参数, 处理不同的命令!
 
 function main(config: ConfigDto) {
   /** 
