@@ -9,7 +9,8 @@ dist
 .s
 
 # 软链接
-src/types/dto
+src/types/zod
+src/types/zodExt
 src/types/node_modules
 
 # Runtime data
