@@ -1,0 +1,8 @@
+symlink:
+  - from: ./Trpc/src/types/zod
+    to: ./Designer/src/types/zod
+  - from: ./Trpc/src/types/zodExt
+    to: ./Designer/src/types/zodExt
+
+    
+
