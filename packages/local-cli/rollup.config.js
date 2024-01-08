@@ -12,6 +12,7 @@ export default [
       format: "cjs",
       entryFileNames: "[name].cjs.js",
     },
+    external: ['inquirer'],
     plugins: [resolve(), commonjs(), typescript(), terser(), cleanup()],
   },
   {
@@ -21,6 +22,7 @@ export default [
       format: "esm",
       entryFileNames: "[name].esm.js",
     },
+    external: ['inquirer'],
     plugins: [resolve(), commonjs(), typescript(), terser(), cleanup()],
   },
 ];
