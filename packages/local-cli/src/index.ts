@@ -3,11 +3,12 @@ import * as yaml from 'js-yaml';
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
 import { ConfigDto, ConfigZod } from './types';
+import { select } from './utils';
 
-// process.cwd()
-// TODO 获取命令的参数, 处理不同的命令!
-
-function main(config: ConfigDto) {
+/**
+ * 设置monorepo.yaml的配置
+ */
+function setMonorepoYamlConfig(config: ConfigDto) {
   /** 
    * 设置软链接
    */
@@ -20,13 +21,28 @@ function main(config: ConfigDto) {
   /** 
    * 设置硬链接
    */
+  // TODO
 }
 
-try {
-  console.log('>>> local-cli脚手架启动');
-  const config = yaml.load(fs.readFileSync('./monorepo.yaml', 'utf8')) as ConfigDto;
-  main(ConfigZod.parse(config));
-  console.log('>>> local-cli脚手架结束');
-} catch (e) {
-  console.log(e);
+/** 设置monorepo.yaml中的配置 */
+function markMonorepoYamlEffect() {
+  try {
+    const config = yaml.load(fs.readFileSync('./monorepo.yaml', 'utf8')) as ConfigDto;
+    setMonorepoYamlConfig(ConfigZod.parse(config));
+  } catch (e) {
+    console.log(e);
+  }
 }
+
+function main() {
+  console.log('>>> 欢迎使用local-cli脚手架');
+  const options = [
+    { name: '设置monorepo.yaml', value: '1', handler: markMonorepoYamlEffect },
+    { name: '启动项目', value: '2', handler: async () => {} },
+  ];
+  select('请选择要执行的操作', options).then(async value=>{
+    options.find(item => item.value === value)?.handler();
+  })
+}
+
+main();
