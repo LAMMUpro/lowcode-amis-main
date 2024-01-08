@@ -3,8 +3,8 @@ version: 1.0.0
 description: amis低代码项目
 main: index.js
 scripts: 
-  # 初始化配置: 软链接/
-  init:config: local-cli
+  # 设置monorepo.yaml中的配置
+  set:config: local-cli set:config
 keywords: []
 author: lammu
 license: MIT
